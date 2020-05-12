@@ -1,0 +1,144 @@
+﻿<Window x:Class="EMVN.AlbumManager.Windows.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EMVN.AlbumManager"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d"
+        Title="Album Manager" Height="520" Width="800">
+    <Grid>
+        <TabControl>
+            <TabItem Header="Album">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*"></ColumnDefinition>
+                        <ColumnDefinition Width="6*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"></RowDefinition>
+                                <RowDefinition Height="30"></RowDefinition>
+                                <RowDefinition Height="30"></RowDefinition>
+                                <RowDefinition Height="30"></RowDefinition>
+                                <RowDefinition Height="30"></RowDefinition>
+                                <RowDefinition Height="30"></RowDefinition>
+                                <RowDefinition Height="30"></RowDefinition>
+                                <RowDefinition Height="30"></RowDefinition>
+                                <RowDefinition Height="30"></RowDefinition>
+                                <RowDefinition Height="30"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                                <ColumnDefinition Width="7*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <DockPanel Grid.Row="0" HorizontalAlignment="Center" Grid.ColumnSpan="2">
+                                <Button Width="50" Margin="3,3,3,3" x:Name="_btnNewAlbum">New</Button>
+                                <Button Width="50" Margin="3,3,3,3" x:Name="_btnClearAlbum">Clear</Button>
+                                <Button Width="50" Margin="3,3,3,3" x:Name="_btnSaveAlbum">Save</Button>
+                            </DockPanel>
+                            <Label Grid.Row="1" Grid.Column="0">Album Code:</Label>
+                            <DockPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left">
+                                <TextBox Width="150"></TextBox>
+                                <Button Width="50" Margin="3,3,3,3" x:Name="_btnLoadAlbum">Load</Button>
+                            </DockPanel>
+                            <Label Grid.Row="2" Grid.Column="0">Title:</Label>
+                            <TextBox Grid.Row="2" Grid.Column="1"></TextBox>
+                            <Label Grid.Row="3" Grid.Column="0">UPC:</Label>
+                            <TextBox Grid.Row="3" Grid.Column="1"></TextBox>
+                            <Label Grid.Row="4" Grid.Column="0">GRID:</Label>
+                            <TextBox Grid.Row="4" Grid.Column="1"></TextBox>
+                            <Label Grid.Row="5" Grid.Column="0">Artist:</Label>
+                            <TextBox Grid.Row="5" Grid.Column="1"></TextBox>
+                            <Label Grid.Row="6" Grid.Column="0">Release Date:</Label>
+                            <xctk:DateTimePicker Grid.Row="6" Grid.Column="1"></xctk:DateTimePicker>
+                            <Label Grid.Row="7" Grid.Column="0">Genre:</Label>
+                            <TextBox Grid.Row="7" Grid.Column="1"></TextBox>
+                            <Label Grid.Row="8" Grid.Column="0">Label:</Label>
+                            <TextBox Grid.Row="8" Grid.Column="1"></TextBox>
+                            <Label Grid.Row="9" Grid.Column="0">Image:</Label>
+                            <DockPanel Grid.Row="9" Grid.Column="1" HorizontalAlignment="Left">
+                                <TextBox Width="150" IsReadOnly="True"></TextBox>
+                                <Button Width="50" Margin="3,3,3,3" x:Name="_btnBrowseAlbumImage">Browse</Button>
+                            </DockPanel>
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"></RowDefinition>
+                            <RowDefinition Height="250"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <DockPanel Grid.Row="0" HorizontalAlignment="Left">
+                            <Button Width="100" Margin="3,3,3,3" x:Name="_btnAddMedia">Add Media</Button>
+                        </DockPanel>
+                        <DataGrid Grid.Row="1">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Track Code"></DataGridTextColumn>
+                                <DataGridTextColumn Header="ISRC" Width="100"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Title" Width="*"></DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <GroupBox Grid.Row="2" Header="Asset">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30"></RowDefinition>
+                                    <RowDefinition Height="30"></RowDefinition>
+                                    <RowDefinition Height="30"></RowDefinition>
+                                    <RowDefinition Height="30"></RowDefinition>
+                                    <RowDefinition Height="30"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Row="0" Grid.Column="0">Asset ID:</Label>
+                                <TextBox Grid.Row="0" Grid.Column="1"></TextBox>
+                                <Label Grid.Row="1" Grid.Column="0">Custom ID:</Label>
+                                <TextBox Grid.Row="1" Grid.Column="1"></TextBox>
+                                <Label Grid.Row="2" Grid.Column="0">Artist:</Label>
+                                <TextBox Grid.Row="2" Grid.Column="1"></TextBox>
+                                <Label Grid.Row="3" Grid.Column="0">Genre:</Label>
+                                <TextBox Grid.Row="3" Grid.Column="1"></TextBox>
+                                <Label Grid.Row="4" Grid.Column="0">ISRC:</Label>
+                                <TextBox Grid.Row="4" Grid.Column="1"></TextBox>
+                                <Label Grid.Row="0" Grid.Column="2">Title:</Label>
+                                <TextBox Grid.Row="0" Grid.Column="3"></TextBox>
+                                <Label Grid.Row="1" Grid.Column="2">Label:</Label>
+                                <TextBox Grid.Row="1" Grid.Column="3"></TextBox>
+                                <Label Grid.Row="2" Grid.Column="2">YT Label:</Label>
+                                <TextBox Grid.Row="2" Grid.Column="3"></TextBox>
+                                <Label Grid.Row="3" Grid.Column="2">Duration:</Label>
+                                <xctk:IntegerUpDown Grid.Row="3" Grid.Column="3"></xctk:IntegerUpDown>
+                                <Label Grid.Row="4" Grid.Column="2">Track Code:</Label>
+                                <xctk:IntegerUpDown Grid.Row="4" Grid.Column="3"></xctk:IntegerUpDown>
+                            </Grid>
+                        </GroupBox>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Settings">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"></RowDefinition>
+                        <RowDefinition Height="30"></RowDefinition>
+                        <RowDefinition Height="30"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0">Album Folder:</Label>
+                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Settings.AlbumFolder}" IsReadOnly="True"></TextBox>
+                    <Label Grid.Row="1" Grid.Column="0">Image Folder:</Label>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Settings.ImageFolder}" IsReadOnly="True"></TextBox>
+                    <Label Grid.Row="2" Grid.Column="0">Track Folder:</Label>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Settings.TrackFolder}" IsReadOnly="True"></TextBox>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
