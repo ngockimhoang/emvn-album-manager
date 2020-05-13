@@ -29,5 +29,29 @@ namespace EMVN.Model
         public string Label { get; set; }
         [JsonProperty("assets")]
         public List<CmsAsset> Assets { get; set; }
+        [JsonIgnore]
+        public DateTime? AlbumReleaseDateObj
+        {
+            get
+            {
+                DateTime releaseDate;
+                if (DateTime.TryParseExact(this.AlbumReleaseDate, "MM/dd/yyyy", System.Threading.Thread.CurrentThread.CurrentCulture, System.Globalization.DateTimeStyles.None, out releaseDate))
+                    return releaseDate;
+                return null;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    AlbumReleaseDate = value.Value.ToString("MM/dd/yyyy");
+                }
+                else AlbumReleaseDate = string.Empty;
+            }
+        }
+
+        #region External Properties
+        [JsonIgnore]
+        public string NewAlbumImagePath { get; set; }
+        #endregion
     }
 }
