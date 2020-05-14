@@ -30,7 +30,7 @@ namespace EMVN.Model
         [JsonProperty("youtube_label")]
         public string YoutubeLabel { get; set; }
         [JsonProperty("duration")]
-        public double Duration { get; set; }
+        public ulong Duration { get; set; }
         [JsonProperty("filename")]
         public string Filename { get; set; }
         [JsonProperty("track_code")]

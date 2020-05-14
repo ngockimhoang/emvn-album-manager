@@ -131,7 +131,7 @@ namespace EMVN.AlbumManager.ViewModel
             }
         }
 
-        public double Duration
+        public ulong Duration
         {
             get
             {

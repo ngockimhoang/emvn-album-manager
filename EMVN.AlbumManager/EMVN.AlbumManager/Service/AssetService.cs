@@ -27,7 +27,7 @@ namespace EMVN.AlbumManager.Service
                     ISRC = tfile.Tag.ISRC,
                     SongTitle = tfile.Tag.Title,
                     Label = tfile.Tag.Publisher,
-                    Duration = tfile.Properties.Duration.TotalMilliseconds,
+                    Duration = Convert.ToUInt64(tfile.Properties.Duration.TotalMilliseconds),
                     TrackCode = Convert.ToInt32(tfile.Tag.Track)
                 };
                 return cmsAsset;
