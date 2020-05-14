@@ -28,7 +28,7 @@ namespace EMVN.AlbumManager.Windows
             InitializeComponent();
             _vm = new MainWindowVM();
             this.DataContext = _vm;
-            _albumService = new AlbumService(_vm.Settings.AlbumFolder, _vm.Settings.ImageFolder, _vm.Settings.TrackFolder);
+            _albumService = new AlbumService();
             _assetService = new AssetService();
         }
 
@@ -95,10 +95,10 @@ namespace EMVN.AlbumManager.Windows
             var dialog = new OpenFileDialog();
             dialog.CheckFileExists = true;
             dialog.Multiselect = false;
-            dialog.Filter = "PNG|*.png";
+            dialog.Filter = "JPG;PNG|*.jpg;*.png";
             if (dialog.ShowDialog().Value)
             {
-                _vm.Album.NewAlbumImagePath = dialog.FileName;
+                _vm.Album.NewAlbumImagePath = dialog.FileName;                
             }
         }
 

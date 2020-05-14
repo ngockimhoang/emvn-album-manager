@@ -12,9 +12,9 @@ namespace EMVN.AlbumManager.ViewModel
     {
         public SettingsVM()
         {
-            _albumFolder = ConfigurationManager.AppSettings["AlbumFolder"];
-            _imageFolder = ConfigurationManager.AppSettings["ImageFolder"];
-            _trackFolder = ConfigurationManager.AppSettings["TrackFolder"];
+            _albumFolder = Settings.AlbumFolder;
+            _imageFolder = Settings.ImageFolder;
+            _trackFolder = Settings.TrackFolder;
         }
 
         private string _albumFolder;

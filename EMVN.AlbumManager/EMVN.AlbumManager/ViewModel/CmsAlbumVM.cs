@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace EMVN.AlbumManager.ViewModel
 {
@@ -25,6 +26,11 @@ namespace EMVN.AlbumManager.ViewModel
             {
                 foreach (var asset in cmsAlbum.Assets)
                     Assets.Add(new CmsAssetVM(asset));
+            }
+            if (!string.IsNullOrEmpty(cmsAlbum.AlbumImage))
+            {
+                var imagePath = System.IO.Path.Combine(Settings.ImageFolder, _cmsAlbum.AlbumCode, cmsAlbum.AlbumImage);
+                this.AlbumImageObj = GetBitmapImge(imagePath);
             }
         }
 
@@ -126,20 +132,7 @@ namespace EMVN.AlbumManager.ViewModel
                 _cmsAlbum.AlbumGenre = value;
                 RaisePropertyChanged("AlbumGenre");
             }
-        }
-
-        public string AlbumImage
-        {
-            get
-            {
-                return _cmsAlbum.AlbumImage;
-            }
-            set
-            {
-                _cmsAlbum.AlbumImage = value;
-                RaisePropertyChanged("AlbumImage");
-            }
-        }
+        }        
 
         public string Label
         {
@@ -161,17 +154,43 @@ namespace EMVN.AlbumManager.ViewModel
                 return _cmsAlbum.NewAlbumImagePath;
             }
             set
-            {                
+            {
                 _cmsAlbum.NewAlbumImagePath = value;
                 _cmsAlbum.AlbumImage = System.IO.Path.GetFileName(value);
+                this.AlbumImageObj = GetBitmapImge(value);
                 RaisePropertyChanged("NewAlbumImagePath");
                 RaisePropertyChanged("AlbumImage");
+            }
+        }
+
+        private BitmapImage _albumImageObj;
+        public BitmapImage AlbumImageObj
+        {
+            get
+            {
+                return _albumImageObj;
+            }
+            set
+            {
+                _albumImageObj = value;
+                RaisePropertyChanged("AlbumImageObj");
             }
         }
 
         public void AddCmsAsset(CmsAsset cmsAsset)
         {
             Assets.Add(new CmsAssetVM(cmsAsset));
+        }
+
+        private BitmapImage GetBitmapImge(string imagePath)
+        {
+            var bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = new Uri(imagePath);
+            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+            bitmap.EndInit();
+            bitmap.Freeze();
+            return bitmap;
         }
     }
 }

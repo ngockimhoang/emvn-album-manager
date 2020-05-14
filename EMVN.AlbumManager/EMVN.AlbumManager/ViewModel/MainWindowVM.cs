@@ -78,6 +78,7 @@ namespace EMVN.AlbumManager.ViewModel
             this.Album = null;
             this.Asset = null;
             this.IsEdit = false;
+            GC.Collect();
         }
 
         public void EditAlbum(CmsAlbum cmsAlbum)

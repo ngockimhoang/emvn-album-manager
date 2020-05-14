@@ -19,7 +19,9 @@
                         <ColumnDefinition Width="4*"></ColumnDefinition>
                         <ColumnDefinition Width="6*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <DockPanel Grid.Row="0" HorizontalAlignment="Center">
+                    <DockPanel Grid.Row="0" HorizontalAlignment="Left">
+                        <TextBox Width="80" CharacterCasing="Upper" x:Name="_tbxAlbumCode"></TextBox>
+                        <Button Width="50" Margin="3,3,3,3" x:Name="_btnLoadAlbum" Click="_btnLoadAlbum_Click">Load</Button>
                         <Button Width="50" Margin="3,3,3,3" x:Name="_btnNewAlbum" Click="_btnNewAlbum_Click">New</Button>
                         <Button Width="50" Margin="3,3,3,3" x:Name="_btnClearAlbum" Click="_btnClearAlbum_Click">Clear</Button>
                         <Button Width="50" Margin="3,3,3,3" x:Name="_btnSaveAlbum" Click="_btnSaveAlbum_Click">Save</Button>
@@ -36,16 +38,14 @@
                                 <RowDefinition Height="30"></RowDefinition>
                                 <RowDefinition Height="30"></RowDefinition>
                                 <RowDefinition Height="30"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="3*"></ColumnDefinition>
                                 <ColumnDefinition Width="7*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Label Grid.Row="0" Grid.Column="0">Album Code:</Label>
-                            <DockPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left">
-                                <TextBox Width="150" Text="{Binding Album.AlbumCode}" IsReadOnly="{Binding IsEdit}" CharacterCasing="Upper" x:Name="_tbxAlbumCode"></TextBox>
-                                <Button Width="50" Margin="3,3,3,3" x:Name="_btnLoadAlbum" Click="_btnLoadAlbum_Click">Load</Button>
-                            </DockPanel>
+                            <TextBox Grid.Row="0" Grid.Column="1"  Text="{Binding Album.AlbumCode}" IsReadOnly="{Binding IsEdit}" CharacterCasing="Upper"></TextBox>
                             <Label Grid.Row="1" Grid.Column="0">Title:</Label>
                             <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Album.AlbumTitle}"></TextBox>
                             <Label Grid.Row="2" Grid.Column="0">UPC:</Label>
@@ -62,9 +62,9 @@
                             <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Album.Label}"></TextBox>
                             <Label Grid.Row="8" Grid.Column="0">Image:</Label>
                             <DockPanel Grid.Row="8" Grid.Column="1" HorizontalAlignment="Left">
-                                <TextBox Width="150" IsReadOnly="True"  Text="{Binding Album.AlbumImage}"></TextBox>
                                 <Button Width="50" Margin="3,3,3,3" x:Name="_btnBrowseAlbumImage" Click="_btnBrowseAlbumImage_Click">Browse</Button>
                             </DockPanel>
+                            <Image Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Source="{Binding Album.AlbumImageObj}" Stretch="UniformToFill"></Image>
                         </Grid>
                     </Grid>
                     <Grid Grid.Row="1" Grid.Column="1" IsEnabled="{Binding IsFormEditable}">
