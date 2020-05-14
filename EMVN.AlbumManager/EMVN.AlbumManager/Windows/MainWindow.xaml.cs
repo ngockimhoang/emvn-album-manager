@@ -104,6 +104,12 @@ namespace EMVN.AlbumManager.Windows
 
         private void _btnAddMedia_Click(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrEmpty(_vm.Album.AlbumCode))
+            {
+                MessageBox.Show("Please enter album code.");
+                return;
+            }
+
             var dialog = new OpenFileDialog();
             dialog.CheckFileExists = true;
             dialog.Multiselect = true;
@@ -115,10 +121,16 @@ namespace EMVN.AlbumManager.Windows
                     CmsAssetVM selectedAsset = null;
                     foreach (var filename in dialog.FileNames)
                     {
+                        if (_assetService.CheckAssetExists(_vm.Album.AlbumCode, System.IO.Path.GetFileName(filename)))
+                        {
+                            MessageBox.Show(string.Format("Asset {0} already exists in album.", System.IO.Path.GetFileName(filename)));
+                            continue;
+                        }
                         var cmsAsset = _assetService.GetCmsAssetFromFile(filename);
                         if (cmsAsset != null)
                         {
                             var cmsAssetVM = _vm.Album.AddCmsAsset(cmsAsset);
+                            cmsAssetVM.CustomID = _assetService.GetCustomID(_vm.Album.AlbumCode, cmsAssetVM.TrackCode);
                             selectedAsset = cmsAssetVM;
                         }
                     }
@@ -129,6 +141,23 @@ namespace EMVN.AlbumManager.Windows
                 {
                     MessageBox.Show(ex.Message);
                 }
+            }
+        }
+
+        private void _btnDeleteAsset_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (_vm.Asset != null)
+                {
+                    _assetService.DeleteCmsAsset(_vm.Album.AlbumCode, _vm.Asset.GetCmsAsset());
+                    _vm.Album.DeleteCmsAsset(_vm.Asset);
+                    _vm.Asset = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }

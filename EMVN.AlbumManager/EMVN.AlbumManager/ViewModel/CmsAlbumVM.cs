@@ -184,6 +184,11 @@ namespace EMVN.AlbumManager.ViewModel
             return cmsAssetVM;
         }
 
+        public void DeleteCmsAsset(CmsAssetVM cmsAssetVM)
+        {
+            Assets.Remove(cmsAssetVM);
+        }
+
         private BitmapImage GetBitmapImge(string imagePath)
         {
             var bitmap = new BitmapImage();
