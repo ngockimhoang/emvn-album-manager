@@ -131,7 +131,7 @@ namespace EMVN.AlbumManager.ViewModel
             }
         }
 
-        public int Duration
+        public double Duration
         {
             get
             {

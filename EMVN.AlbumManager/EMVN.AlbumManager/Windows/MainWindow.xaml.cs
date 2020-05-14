@@ -110,18 +110,25 @@ namespace EMVN.AlbumManager.Windows
             dialog.Filter = "mp3|*.mp3";
             if (dialog.ShowDialog().Value)
             {
-                CmsAssetVM selectedAsset = null;
-                foreach (var filename in dialog.FileNames)
+                try
                 {
-                    var cmsAsset = _assetService.GetCmsAssetFromFile(filename);
-                    if (cmsAsset != null)
+                    CmsAssetVM selectedAsset = null;
+                    foreach (var filename in dialog.FileNames)
                     {
-                        var cmsAssetVM = _vm.Album.AddCmsAsset(cmsAsset);
-                        selectedAsset = cmsAssetVM;
+                        var cmsAsset = _assetService.GetCmsAssetFromFile(filename);
+                        if (cmsAsset != null)
+                        {
+                            var cmsAssetVM = _vm.Album.AddCmsAsset(cmsAsset);
+                            selectedAsset = cmsAssetVM;
+                        }
                     }
+                    if (selectedAsset != null)
+                        _vm.Asset = selectedAsset;
                 }
-                if (selectedAsset != null)
-                    _vm.Asset = selectedAsset;
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
     }
