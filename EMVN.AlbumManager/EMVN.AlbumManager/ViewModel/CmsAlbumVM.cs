@@ -177,9 +177,11 @@ namespace EMVN.AlbumManager.ViewModel
             }
         }
 
-        public void AddCmsAsset(CmsAsset cmsAsset)
+        public CmsAssetVM AddCmsAsset(CmsAsset cmsAsset)
         {
-            Assets.Add(new CmsAssetVM(cmsAsset));
+            var cmsAssetVM = new CmsAssetVM(cmsAsset);
+            Assets.Add(cmsAssetVM);
+            return cmsAssetVM;
         }
 
         private BitmapImage GetBitmapImge(string imagePath)
