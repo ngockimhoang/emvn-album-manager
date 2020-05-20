@@ -121,7 +121,8 @@ namespace EMVN.AlbumManager.Windows
                     CmsAssetVM selectedAsset = null;
                     foreach (var filename in dialog.FileNames)
                     {
-                        if (_assetService.CheckAssetExists(_vm.Album.AlbumCode, System.IO.Path.GetFileName(filename)))
+                        if (_assetService.CheckAssetExists(_vm.Album.AlbumCode, System.IO.Path.GetFileName(filename))
+                            || _vm.Album.Assets.Where(p => !string.IsNullOrEmpty(p.NewFilePath) && p.NewFilePath.Equals(filename, StringComparison.InvariantCultureIgnoreCase)).Any())
                         {
                             MessageBox.Show(string.Format("Asset {0} already exists in album.", System.IO.Path.GetFileName(filename)));
                             continue;

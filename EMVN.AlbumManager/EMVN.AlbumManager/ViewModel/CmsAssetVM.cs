@@ -169,5 +169,13 @@ namespace EMVN.AlbumManager.ViewModel
                 RaisePropertyChanged("TrackCode");
             }
         }
+
+        public string NewFilePath
+        {
+            get
+            {
+                return _cmsAsset.NewFilePath;
+            }
+        }
     }
 }
