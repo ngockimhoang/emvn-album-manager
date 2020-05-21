@@ -164,19 +164,25 @@ namespace EMVN.AlbumManager.Windows
 
         private void _btnLoadAllAbums_Click(object sender, RoutedEventArgs e)
         {
-            try
+            _vm.Albums.Clear();
+            _busyIndicator.IsBusy = true;
+            Task.Run(() =>
             {
-                _vm.Albums.Clear();
                 var albums = _albumService.GetAllAlbums();
                 foreach (var album in albums)
                 {
-                    _vm.Albums.Add(new CmsAlbumVM(album));
+                    Dispatcher.Invoke(() =>
+                    {
+                        _vm.Albums.Add(new CmsAlbumVM(album));
+                    });
                 }
-            }
-            catch (Exception ex)
+            }).ContinueWith(task =>
             {
-                MessageBox.Show(ex.Message);
-            }
+                Dispatcher.Invoke(() =>
+                {
+                    _busyIndicator.IsBusy = false;
+                });
+            });
         }
 
         private void _btnAllAM_Click(object sender, RoutedEventArgs e)
