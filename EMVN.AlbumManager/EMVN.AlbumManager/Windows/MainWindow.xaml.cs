@@ -234,5 +234,27 @@ namespace EMVN.AlbumManager.Windows
                 });
             });
         }
+
+        private void _btnGetResult_Click(object sender, RoutedEventArgs e)
+        {
+            var ddexFolderList = new List<string>();
+            foreach (var album in _vm.Albums)
+            {
+                if (album.IsSelected)
+                {
+                    var ddexFolder = _albumService.GetDDEXFolder(album.AlbumCode);
+                    if (!string.IsNullOrEmpty(ddexFolder))
+                        ddexFolderList.Add(ddexFolder);
+                }
+            }
+
+            if (ddexFolderList.Any())
+            {
+                Task.Run(() =>
+                {
+                    _albumService.WatchUploadAlbumReport(ddexFolderList.ToArray());
+                });
+            }
+        }
     }
 }

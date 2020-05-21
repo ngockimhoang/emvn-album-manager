@@ -148,7 +148,7 @@
                             <Button Margin="3,3,3,3" Width="80" x:Name="_btnAllAPL" Click="_btnAllAPL_Click">All APL</Button>
                             <Button Margin="3,3,3,3" Width="80" x:Name="_btnAllOthers" Click="_btnAllOthers_Click">All Others</Button>
                             <Button Margin="3,3,3,3" Width="80" x:Name="_btnSubmitYouTube" Click="_btnSubmitYouTube_Click">Submit YT</Button>
-                            <Button Margin="3,3,3,3" Width="80" x:Name="_btnGetResult">Get Result</Button>
+                            <Button Margin="3,3,3,3" Width="80" x:Name="_btnGetResult" Click="_btnGetResult_Click">Get Result</Button>
                         </DockPanel>
                         <DataGrid AutoGenerateColumns="False" Grid.Row="1" ItemsSource="{Binding Albums}" CanUserAddRows="False">
                             <DataGrid.Columns>
