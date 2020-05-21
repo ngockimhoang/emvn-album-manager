@@ -16,6 +16,8 @@ namespace EMVN.AlbumManager.ViewModel
             _imageFolder = Settings.ImageFolder;
             _trackFolder = Settings.TrackFolder;
             _ddexFolder = Settings.DDEXFolder;
+            _ddexFolder = Settings.DDEXFolder;
+            _youtubeAssetCLIFolder = Settings.YoutubeAssetCLIFolder;
         }
 
         private string _albumFolder;
@@ -71,6 +73,20 @@ namespace EMVN.AlbumManager.ViewModel
             {
                 _ddexFolder = value;
                 RaisePropertyChanged("DDEXFolder");
+            }
+        }
+
+        private string _youtubeAssetCLIFolder;
+        public string YoutubeAssetCLIFolder
+        {
+            get
+            {
+                return _youtubeAssetCLIFolder;
+            }
+            set
+            {
+                _youtubeAssetCLIFolder = value;
+                RaisePropertyChanged("YoutubeAssetCLIFolder");
             }
         }
     }
