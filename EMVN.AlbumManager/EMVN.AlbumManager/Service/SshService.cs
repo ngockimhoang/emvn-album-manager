@@ -45,27 +45,26 @@ namespace EMVN.AlbumManager.Service
         public void UploadFolder(string folder, string parentFolder)
         {
             //create folder
-            var remoteFolder = parentFolder;
-            if (!string.IsNullOrEmpty(remoteFolder))
-                remoteFolder += "/";
-            remoteFolder += Path.GetFileName(folder);
+            var remoteFolder = Path.GetFileName(folder);
 
             if (_client.Exists(remoteFolder))
                 throw new Exception("Folder exists in remote");
 
-            _client.Create(remoteFolder);
+            _client.CreateDirectory(remoteFolder);
             _client.ChangeDirectory(remoteFolder);
             
             foreach (var file in Directory.GetFiles(folder, "*", SearchOption.TopDirectoryOnly))
             {
                 this.UploadFile(file, null);
-            }            
+            }
 
             //sub folders
             foreach (var subFolder in Directory.GetDirectories(folder))
             {
                 this.UploadFolder(subFolder, remoteFolder);
             }
+
+            _client.ChangeDirectory("../");
         }
 
         public Stream DownloadFile(string file, string remoteFolder)
