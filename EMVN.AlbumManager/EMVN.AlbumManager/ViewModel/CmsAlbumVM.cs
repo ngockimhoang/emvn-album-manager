@@ -203,8 +203,8 @@ namespace EMVN.AlbumManager.ViewModel
         {
             get
             {
-                return _cmsAlbum.AlbumCode.StartsWith("APL") ||
-                       _cmsAlbum.AlbumCode.StartsWith("SPL");
+                return _cmsAlbum.AlbumCode.StartsWith("AP") ||
+                       _cmsAlbum.AlbumCode.StartsWith("SP");
             }
         }
 

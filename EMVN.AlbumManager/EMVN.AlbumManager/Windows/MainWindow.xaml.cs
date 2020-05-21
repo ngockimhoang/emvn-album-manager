@@ -169,13 +169,18 @@ namespace EMVN.AlbumManager.Windows
             Task.Run(() =>
             {
                 var albums = _albumService.GetAllAlbums();
+                var albumVMs = new List<CmsAlbumVM>();
                 foreach (var album in albums)
                 {
-                    Dispatcher.Invoke(() =>
-                    {
-                        _vm.Albums.Add(new CmsAlbumVM(album));
-                    });
+                    albumVMs.Add(new CmsAlbumVM(album));                    
                 }
+                Dispatcher.Invoke(() =>
+                {
+                    foreach (var albumVM in albumVMs)
+                    {
+                        _vm.Albums.Add(albumVM);
+                    }
+                });
             }).ContinueWith(task =>
             {
                 Dispatcher.Invoke(() =>
@@ -261,6 +266,42 @@ namespace EMVN.AlbumManager.Windows
                     _albumService.WatchUploadAlbumReport(ddexFolderList.ToArray());
                 });
             }
+        }
+
+        private void _btnClearSelection_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var album in _vm.Albums)
+            {
+                album.IsSelected = false;
+            }
+        }
+
+        private void _btnSaveAbums_Click(object sender, RoutedEventArgs e)
+        {
+            _busyIndicator.IsBusy = true;
+            Task.Run(() =>
+            {               
+                foreach (var albumVM in _vm.Albums)
+                {
+                    if (albumVM.IsSelected)
+                        _albumService.SaveAlbum(albumVM.GetCmsAlbum());
+                }
+            }).ContinueWith(task =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    _busyIndicator.IsBusy = false;
+                });
+            });
+        }
+
+        private void _btnCustom_Click(object sender, RoutedEventArgs e)
+        {
+            //foreach (var album in _vm.Albums)
+            //{
+            //    if (album.IsAPL)
+            //        album.Label = "APL Publishing";
+            //}
         }
     }
 }
