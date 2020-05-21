@@ -165,6 +165,7 @@
                             <RowDefinition Height="30"></RowDefinition>
                             <RowDefinition Height="30"></RowDefinition>
                             <RowDefinition Height="30"></RowDefinition>
+                            <RowDefinition Height="30"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="100"></ColumnDefinition>
@@ -176,6 +177,8 @@
                         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Settings.ImageFolder}" IsReadOnly="True"></TextBox>
                         <Label Grid.Row="2" Grid.Column="0">Track Folder:</Label>
                         <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Settings.TrackFolder}" IsReadOnly="True"></TextBox>
+                        <Label Grid.Row="3" Grid.Column="0">DDEX Folder:</Label>
+                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Settings.DDEXFolder}" IsReadOnly="True"></TextBox>
                     </Grid>
                 </TabItem>
             </TabControl>

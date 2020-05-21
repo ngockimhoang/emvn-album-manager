@@ -15,6 +15,7 @@ namespace EMVN.AlbumManager.ViewModel
             _albumFolder = Settings.AlbumFolder;
             _imageFolder = Settings.ImageFolder;
             _trackFolder = Settings.TrackFolder;
+            _ddexFolder = Settings.DDEXFolder;
         }
 
         private string _albumFolder;
@@ -56,6 +57,20 @@ namespace EMVN.AlbumManager.ViewModel
             {
                 _trackFolder = value;
                 RaisePropertyChanged("TrackFolder");
+            }
+        }
+
+        private string _ddexFolder;
+        public string DDEXFolder
+        {
+            get
+            {
+                return _ddexFolder;
+            }
+            set
+            {
+                _ddexFolder = value;
+                RaisePropertyChanged("DDEXFolder");
             }
         }
     }
