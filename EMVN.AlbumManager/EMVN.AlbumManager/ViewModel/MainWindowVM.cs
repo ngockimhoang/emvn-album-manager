@@ -2,6 +2,7 @@
 using EMVN.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ namespace EMVN.AlbumManager.ViewModel
         public MainWindowVM()
         {
             Settings = new SettingsVM();
+            Albums = new ObservableCollection<CmsAlbumVM>();
         }
 
         public SettingsVM Settings { get; private set; }
@@ -87,5 +89,7 @@ namespace EMVN.AlbumManager.ViewModel
             this.Asset = null;
             this.IsEdit = true;
         }
+
+        public ObservableCollection<CmsAlbumVM> Albums { get; private set; }
     }
 }

@@ -3,6 +3,7 @@ using EMVN.Model;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace EMVN.AlbumManager.Service
         {
             _albumFolder = Settings.AlbumFolder;
             _imageFolder = Settings.ImageFolder;
-            _trackFolder = Settings.TrackFolder;
+            _trackFolder = Settings.TrackFolder;            
         }
 
         private string _albumFolder;
@@ -79,6 +80,91 @@ namespace EMVN.AlbumManager.Service
             var albumFilePath = System.IO.Path.Combine(albumFolderPath, cmsAlbum.AlbumCode + ".json");
             var settings = new JsonSerializerSettings() { ContractResolver = new NullToEmptyStringResolver(), Formatting = Formatting.Indented };
             System.IO.File.WriteAllText(albumFilePath, JsonConvert.SerializeObject(cmsAlbum, settings));
+        }
+
+        public List<CmsAlbum> GetAllAlbums()
+        {
+            var albums = new List<CmsAlbum>();
+            var folders = System.IO.Directory.GetDirectories(_albumFolder);
+            foreach (var folder in folders)
+            {
+                var albumCode = System.IO.Path.GetFileName(folder);
+                var album = this.LoadAlbum(albumCode);
+                if (album != null)
+                    albums.Add(album);
+            }
+            return albums;
+        }
+
+        public string UploadAlbum(string albumCode)
+        {
+            var albumFolders = System.IO.Directory.GetDirectories(Settings.DDEXFolder, albumCode + "*");
+            if (albumFolders.Any())
+            {
+                using (var sshService = new SshService(Settings.SshUrl, Settings.SshPort, Settings.SshUsername, Settings.SshPassword, Settings.SshKey))
+                {
+                    var ddexFolder = albumFolders[0];
+                    sshService.UploadFolder(ddexFolder, null);
+
+                    //upload BatchComplete_.xml
+                    using (var stream = new MemoryStream())
+                    {
+                        stream.WriteByte(0);
+                        stream.Position = 0;
+                        sshService.UploadFile(stream, "BatchComplete_.xml", Path.GetFileName(ddexFolder));
+                    }
+
+                    return ddexFolder;
+                }
+            }
+            return null;
+        }
+
+        public string GetDDEXFolder(string albumCode)
+        {
+            var albumFolders = System.IO.Directory.GetDirectories(Settings.DDEXFolder, albumCode + "*");
+            if (albumFolders.Any())
+                return albumFolders[0];
+            return null;
+        }
+
+        public void WatchUploadAlbumReport(string[] ddexFolderList)
+        {
+            var completedFolders = new Dictionary<string, int>();
+            while (completedFolders.Count != ddexFolderList.Count())
+            {
+                using (var sshService = new SshService(Settings.SshUrl, Settings.SshPort, Settings.SshUsername, Settings.SshPassword, Settings.SshKey))
+                {
+                    foreach (var ddexFolder in ddexFolderList)
+                    {
+                        var remoteFolder = Path.GetFileName(ddexFolder);
+                        if (completedFolders.ContainsKey(remoteFolder))
+                            continue;
+                        if (!sshService.Exists(remoteFolder))
+                        {
+                            completedFolders.Add(remoteFolder, 1);
+                            continue;
+                        }
+                        var files = sshService.ListDirectory(remoteFolder);
+                        var ackFile = files.Where(p => p.StartsWith("ACK_")).FirstOrDefault();
+                        if (ackFile != null)
+                        {
+                            using (var stream = sshService.DownloadFile(ackFile, remoteFolder))
+                            {
+                                stream.Position = 0;
+                                using (var fileStream = File.Create(Path.Combine(ddexFolder, ackFile)))
+                                {
+                                    stream.CopyTo(fileStream);
+                                }
+                            }
+
+                            completedFolders.Add(remoteFolder, 1);
+                        }
+                    }
+
+                    System.Threading.Thread.Sleep(TimeSpan.FromMinutes(1));
+                }
+            }
         }
     }
 }

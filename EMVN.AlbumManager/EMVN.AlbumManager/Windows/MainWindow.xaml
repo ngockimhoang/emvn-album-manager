@@ -8,94 +8,26 @@
         mc:Ignorable="d"
         Title="Album Manager" Height="560" Width="800">
     <Grid>
-        <TabControl>
-            <TabItem Header="Album">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="30"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="4*"></ColumnDefinition>
-                        <ColumnDefinition Width="6*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <DockPanel Grid.Row="0" HorizontalAlignment="Left">
-                        <TextBox Width="80" CharacterCasing="Upper" x:Name="_tbxAlbumCode"></TextBox>
-                        <Button Width="50" Margin="3,3,3,3" x:Name="_btnLoadAlbum" Click="_btnLoadAlbum_Click">Load</Button>
-                        <Button Width="50" Margin="3,3,3,3" x:Name="_btnNewAlbum" Click="_btnNewAlbum_Click">New</Button>
-                        <Button Width="50" Margin="3,3,3,3" x:Name="_btnClearAlbum" Click="_btnClearAlbum_Click">Clear</Button>
-                        <Button Width="50" Margin="3,3,3,3" x:Name="_btnSaveAlbum" Click="_btnSaveAlbum_Click">Save</Button>
-                    </DockPanel>
-                    <Grid Grid.Row="1" Grid.Column="0" IsEnabled="{Binding IsFormEditable}">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="*"></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="3*"></ColumnDefinition>
-                                <ColumnDefinition Width="7*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Row="0" Grid.Column="0">Album Code:</Label>
-                            <TextBox Grid.Row="0" Grid.Column="1"  Text="{Binding Album.AlbumCode}" IsReadOnly="{Binding IsEdit}" CharacterCasing="Upper"></TextBox>
-                            <Label Grid.Row="1" Grid.Column="0">Title:</Label>
-                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Album.AlbumTitle}"></TextBox>
-                            <Label Grid.Row="2" Grid.Column="0">UPC:</Label>
-                            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Album.AlbumUPC}"></TextBox>
-                            <Label Grid.Row="3" Grid.Column="0">GRID:</Label>
-                            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Album.AlbumGRID}" CharacterCasing="Upper"></TextBox>
-                            <Label Grid.Row="4" Grid.Column="0">Artist:</Label>
-                            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Album.AlbumArtist}"></TextBox>
-                            <Label Grid.Row="5" Grid.Column="0">Release Date:</Label>
-                            <xctk:DateTimePicker Grid.Row="5" Grid.Column="1" Value="{Binding Album.AlbumReleaseDate}" Format="ShortDate"></xctk:DateTimePicker>
-                            <Label Grid.Row="6" Grid.Column="0">Genre:</Label>
-                            <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Album.AlbumGenre}"></TextBox>
-                            <Label Grid.Row="7" Grid.Column="0">Label:</Label>
-                            <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Album.Label}"></TextBox>
-                            <Label Grid.Row="8" Grid.Column="0">Image:</Label>
-                            <DockPanel Grid.Row="8" Grid.Column="1" HorizontalAlignment="Left">
-                                <Button Width="50" Margin="3,3,3,3" x:Name="_btnBrowseAlbumImage" Click="_btnBrowseAlbumImage_Click">Browse</Button>
-                            </DockPanel>
-                            <Image Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Source="{Binding Album.AlbumImageObj}" Stretch="UniformToFill"></Image>
-                        </Grid>
-                    </Grid>
-                    <Grid Grid.Row="1" Grid.Column="1" IsEnabled="{Binding IsFormEditable}">
+        <xctk:BusyIndicator x:Name="_busyIndicator">
+            <TabControl>
+                <TabItem Header="Album">
+                    <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30"></RowDefinition>
-                            <RowDefinition Height="250"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="4*"></ColumnDefinition>
+                            <ColumnDefinition Width="6*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
                         <DockPanel Grid.Row="0" HorizontalAlignment="Left">
-                            <Button Width="100" Margin="3,3,3,3" x:Name="_btnAddMedia" Click="_btnAddMedia_Click">Add Media</Button>
+                            <TextBox Width="80" CharacterCasing="Upper" x:Name="_tbxAlbumCode"></TextBox>
+                            <Button Width="50" Margin="3,3,3,3" x:Name="_btnLoadAlbum" Click="_btnLoadAlbum_Click">Load</Button>
+                            <Button Width="50" Margin="3,3,3,3" x:Name="_btnNewAlbum" Click="_btnNewAlbum_Click">New</Button>
+                            <Button Width="50" Margin="3,3,3,3" x:Name="_btnClearAlbum" Click="_btnClearAlbum_Click">Clear</Button>
+                            <Button Width="50" Margin="3,3,3,3" x:Name="_btnSaveAlbum" Click="_btnSaveAlbum_Click">Save</Button>
                         </DockPanel>
-                        <DataGrid Grid.Row="1" 
-                                  ItemsSource="{Binding Album.Assets}" 
-                                  SelectionMode="Single" 
-                                  SelectedItem="{Binding Asset}" 
-                                  AutoGenerateColumns="False"
-                                  CanUserAddRows="False">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Track Code" Binding="{Binding TrackCode}" IsReadOnly="True"></DataGridTextColumn>
-                                <DataGridTextColumn Header="ISRC" Width="100" Binding="{Binding ISRC}" IsReadOnly="True"></DataGridTextColumn>
-                                <DataGridTextColumn Header="Title" Width="*"  Binding="{Binding SongTitle}" IsReadOnly="True"></DataGridTextColumn>
-                                <DataGridTemplateColumn>
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Button x:Name="_btnDeleteAsset" Click="_btnDeleteAsset_Click">Delete</Button>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                        <GroupBox Grid.Row="2" Header="Asset">
+                        <Grid Grid.Row="1" Grid.Column="0" IsEnabled="{Binding IsFormEditable}">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="30"></RowDefinition>
@@ -103,57 +35,150 @@
                                     <RowDefinition Height="30"></RowDefinition>
                                     <RowDefinition Height="30"></RowDefinition>
                                     <RowDefinition Height="30"></RowDefinition>
+                                    <RowDefinition Height="30"></RowDefinition>
+                                    <RowDefinition Height="30"></RowDefinition>
+                                    <RowDefinition Height="30"></RowDefinition>
+                                    <RowDefinition Height="30"></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="2*"></ColumnDefinition>
                                     <ColumnDefinition Width="3*"></ColumnDefinition>
-                                    <ColumnDefinition Width="2*"></ColumnDefinition>
-                                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                                    <ColumnDefinition Width="7*"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
-                                <Label Grid.Row="0" Grid.Column="0">Asset ID:</Label>
-                                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Asset.AssetID}" CharacterCasing="Upper"></TextBox>
-                                <Label Grid.Row="1" Grid.Column="0">Custom ID:</Label>
-                                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Asset.CustomID}" CharacterCasing="Upper"></TextBox>
-                                <Label Grid.Row="2" Grid.Column="0">Artist:</Label>
-                                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Asset.Artist}"></TextBox>
-                                <Label Grid.Row="3" Grid.Column="0">Genre:</Label>
-                                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Asset.Genre}"></TextBox>
-                                <Label Grid.Row="4" Grid.Column="0">ISRC:</Label>
-                                <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Asset.ISRC}"></TextBox>
-                                <Label Grid.Row="0" Grid.Column="2">Title:</Label>
-                                <TextBox Grid.Row="0" Grid.Column="3" Text="{Binding Asset.SongTitle}"></TextBox>
-                                <Label Grid.Row="1" Grid.Column="2">Label:</Label>
-                                <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding Asset.Label}"></TextBox>
-                                <Label Grid.Row="2" Grid.Column="2">YT Label:</Label>
-                                <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding Asset.YoutubeLabel}"></TextBox>
-                                <Label Grid.Row="3" Grid.Column="2">Duration:</Label>
-                                <xctk:IntegerUpDown Grid.Row="3" Grid.Column="3" Value="{Binding Asset.Duration}"></xctk:IntegerUpDown>
-                                <Label Grid.Row="4" Grid.Column="2">Track Code:</Label>
-                                <xctk:IntegerUpDown Grid.Row="4" Grid.Column="3"  Value="{Binding Asset.TrackCode}"></xctk:IntegerUpDown>
+                                <Label Grid.Row="0" Grid.Column="0">Album Code:</Label>
+                                <TextBox Grid.Row="0" Grid.Column="1"  Text="{Binding Album.AlbumCode}" IsReadOnly="{Binding IsEdit}" CharacterCasing="Upper"></TextBox>
+                                <Label Grid.Row="1" Grid.Column="0">Title:</Label>
+                                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Album.AlbumTitle}"></TextBox>
+                                <Label Grid.Row="2" Grid.Column="0">UPC:</Label>
+                                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Album.AlbumUPC}"></TextBox>
+                                <Label Grid.Row="3" Grid.Column="0">GRID:</Label>
+                                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Album.AlbumGRID}" CharacterCasing="Upper"></TextBox>
+                                <Label Grid.Row="4" Grid.Column="0">Artist:</Label>
+                                <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Album.AlbumArtist}"></TextBox>
+                                <Label Grid.Row="5" Grid.Column="0">Release Date:</Label>
+                                <xctk:DateTimePicker Grid.Row="5" Grid.Column="1" Value="{Binding Album.AlbumReleaseDate}" Format="ShortDate"></xctk:DateTimePicker>
+                                <Label Grid.Row="6" Grid.Column="0">Genre:</Label>
+                                <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Album.AlbumGenre}"></TextBox>
+                                <Label Grid.Row="7" Grid.Column="0">Label:</Label>
+                                <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Album.Label}"></TextBox>
+                                <Label Grid.Row="8" Grid.Column="0">Image:</Label>
+                                <DockPanel Grid.Row="8" Grid.Column="1" HorizontalAlignment="Left">
+                                    <Button Width="50" Margin="3,3,3,3" x:Name="_btnBrowseAlbumImage" Click="_btnBrowseAlbumImage_Click">Browse</Button>
+                                </DockPanel>
+                                <Image Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Source="{Binding Album.AlbumImageObj}" Stretch="UniformToFill"></Image>
                             </Grid>
-                        </GroupBox>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="1" IsEnabled="{Binding IsFormEditable}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"></RowDefinition>
+                                <RowDefinition Height="250"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <DockPanel Grid.Row="0" HorizontalAlignment="Left">
+                                <Button Width="100" Margin="3,3,3,3" x:Name="_btnAddMedia" Click="_btnAddMedia_Click">Add Media</Button>
+                            </DockPanel>
+                            <DataGrid Grid.Row="1" 
+                                  ItemsSource="{Binding Album.Assets}" 
+                                  SelectionMode="Single" 
+                                  SelectedItem="{Binding Asset}" 
+                                  AutoGenerateColumns="False"
+                                  CanUserAddRows="False">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Track Code" Binding="{Binding TrackCode}" IsReadOnly="True"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="ISRC" Width="100" Binding="{Binding ISRC}" IsReadOnly="True"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Title" Width="*"  Binding="{Binding SongTitle}" IsReadOnly="True"></DataGridTextColumn>
+                                    <DataGridTemplateColumn>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button x:Name="_btnDeleteAsset" Click="_btnDeleteAsset_Click">Delete</Button>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <GroupBox Grid.Row="2" Header="Asset">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="30"></RowDefinition>
+                                        <RowDefinition Height="30"></RowDefinition>
+                                        <RowDefinition Height="30"></RowDefinition>
+                                        <RowDefinition Height="30"></RowDefinition>
+                                        <RowDefinition Height="30"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Row="0" Grid.Column="0">Asset ID:</Label>
+                                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Asset.AssetID}" CharacterCasing="Upper"></TextBox>
+                                    <Label Grid.Row="1" Grid.Column="0">Custom ID:</Label>
+                                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Asset.CustomID}" CharacterCasing="Upper"></TextBox>
+                                    <Label Grid.Row="2" Grid.Column="0">Artist:</Label>
+                                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Asset.Artist}"></TextBox>
+                                    <Label Grid.Row="3" Grid.Column="0">Genre:</Label>
+                                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Asset.Genre}"></TextBox>
+                                    <Label Grid.Row="4" Grid.Column="0">ISRC:</Label>
+                                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Asset.ISRC}"></TextBox>
+                                    <Label Grid.Row="0" Grid.Column="2">Title:</Label>
+                                    <TextBox Grid.Row="0" Grid.Column="3" Text="{Binding Asset.SongTitle}"></TextBox>
+                                    <Label Grid.Row="1" Grid.Column="2">Label:</Label>
+                                    <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding Asset.Label}"></TextBox>
+                                    <Label Grid.Row="2" Grid.Column="2">YT Label:</Label>
+                                    <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding Asset.YoutubeLabel}"></TextBox>
+                                    <Label Grid.Row="3" Grid.Column="2">Duration:</Label>
+                                    <xctk:IntegerUpDown Grid.Row="3" Grid.Column="3" Value="{Binding Asset.Duration}"></xctk:IntegerUpDown>
+                                    <Label Grid.Row="4" Grid.Column="2">Track Code:</Label>
+                                    <xctk:IntegerUpDown Grid.Row="4" Grid.Column="3"  Value="{Binding Asset.TrackCode}"></xctk:IntegerUpDown>
+                                </Grid>
+                            </GroupBox>
+                        </Grid>
                     </Grid>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Settings">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="30"></RowDefinition>
-                        <RowDefinition Height="30"></RowDefinition>
-                        <RowDefinition Height="30"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Label Grid.Row="0" Grid.Column="0">Album Folder:</Label>
-                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Settings.AlbumFolder}" IsReadOnly="True"></TextBox>
-                    <Label Grid.Row="1" Grid.Column="0">Image Folder:</Label>
-                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Settings.ImageFolder}" IsReadOnly="True"></TextBox>
-                    <Label Grid.Row="2" Grid.Column="0">Track Folder:</Label>
-                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Settings.TrackFolder}" IsReadOnly="True"></TextBox>
-                </Grid>
-            </TabItem>
-        </TabControl>
+                </TabItem>
+                <TabItem Header="YouTube">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <DockPanel Grid.Row="0" HorizontalAlignment="Left">
+                            <Button Margin="3,3,3,3" Width="80" x:Name="_btnLoadAllAbums" Click="_btnLoadAllAbums_Click">Load</Button>
+                            <Button Margin="3,3,3,3" Width="80" x:Name="_btnAllAM" Click="_btnAllAM_Click">All AM</Button>
+                            <Button Margin="3,3,3,3" Width="80" x:Name="_btnAllAPL" Click="_btnAllAPL_Click">All APL</Button>
+                            <Button Margin="3,3,3,3" Width="80" x:Name="_btnAllOthers" Click="_btnAllOthers_Click">All Others</Button>
+                            <Button Margin="3,3,3,3" Width="80" x:Name="_btnSubmitYouTube" Click="_btnSubmitYouTube_Click">Submit YT</Button>
+                            <Button Margin="3,3,3,3" Width="80" x:Name="_btnGetResult">Get Result</Button>
+                        </DockPanel>
+                        <DataGrid AutoGenerateColumns="False" Grid.Row="1" ItemsSource="{Binding Albums}" CanUserAddRows="False">
+                            <DataGrid.Columns>
+                                <DataGridCheckBoxColumn Header="" Binding="{Binding IsSelected}" Width="40"></DataGridCheckBoxColumn>
+                                <DataGridTextColumn Header="Album Code" Binding="{Binding AlbumCode}" Width="100"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Album Title" Binding="{Binding AlbumTitle}" Width="*"></DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Settings">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"></RowDefinition>
+                            <RowDefinition Height="30"></RowDefinition>
+                            <RowDefinition Height="30"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0">Album Folder:</Label>
+                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Settings.AlbumFolder}" IsReadOnly="True"></TextBox>
+                        <Label Grid.Row="1" Grid.Column="0">Image Folder:</Label>
+                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Settings.ImageFolder}" IsReadOnly="True"></TextBox>
+                        <Label Grid.Row="2" Grid.Column="0">Track Folder:</Label>
+                        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Settings.TrackFolder}" IsReadOnly="True"></TextBox>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </xctk:BusyIndicator>
     </Grid>
 </Window>

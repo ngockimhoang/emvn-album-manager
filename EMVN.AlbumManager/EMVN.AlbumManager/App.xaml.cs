@@ -19,5 +19,12 @@ namespace EMVN.AlbumManager
 
             Settings.Initialize();
         }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            base.OnExit(e);
+
+            EMVN.Common.Log.Logger.Instance.Close();
+        }
     }
 }

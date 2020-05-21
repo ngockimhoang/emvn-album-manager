@@ -177,6 +177,37 @@ namespace EMVN.AlbumManager.ViewModel
             }
         }
 
+        private bool _isSelected;
+        public bool IsSelected
+        {
+            get
+            {
+                return _isSelected;
+            }
+            set
+            {
+                _isSelected = value;
+                RaisePropertyChanged("IsSelected");
+            }
+        }
+
+        public bool IsAM
+        {
+            get
+            {
+                return _cmsAlbum.AlbumCode.StartsWith("AM");
+            }
+        }
+
+        public bool IsAPL
+        {
+            get
+            {
+                return _cmsAlbum.AlbumCode.StartsWith("APL") ||
+                       _cmsAlbum.AlbumCode.StartsWith("SPL");
+            }
+        }
+
         public CmsAssetVM AddCmsAsset(CmsAsset cmsAsset)
         {
             var cmsAssetVM = new CmsAssetVM(cmsAsset);

@@ -161,5 +161,78 @@ namespace EMVN.AlbumManager.Windows
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void _btnLoadAllAbums_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                _vm.Albums.Clear();
+                var albums = _albumService.GetAllAlbums();
+                foreach (var album in albums)
+                {
+                    _vm.Albums.Add(new CmsAlbumVM(album));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void _btnAllAM_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var album in _vm.Albums)
+            {
+                album.IsSelected = album.IsAM;
+            }
+        }
+
+        private void _btnAllAPL_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var album in _vm.Albums)
+            {
+                album.IsSelected = album.IsAPL;
+            }
+        }
+
+        private void _btnAllOthers_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var album in _vm.Albums)
+            {
+                album.IsSelected = !album.IsAM && !album.IsAPL;
+            }
+        }
+
+        private void _btnSubmitYouTube_Click(object sender, RoutedEventArgs e)
+        {
+            _busyIndicator.IsBusy = true;
+            Task.Run(() =>
+            {
+                var ddexFolderList = new List<string>();
+                foreach (var album in _vm.Albums)
+                {
+                    if (album.IsSelected)
+                    {
+                        var ddexFolder = _albumService.UploadAlbum(album.AlbumCode);
+                        if (!string.IsNullOrEmpty(ddexFolder))
+                            ddexFolderList.Add(ddexFolder);
+                    }
+                }
+
+                if (ddexFolderList.Any())
+                {
+                    Task.Run(() =>
+                    {
+                        _albumService.WatchUploadAlbumReport(ddexFolderList.ToArray());
+                    });
+                }
+            }).ContinueWith(task =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    _busyIndicator.IsBusy = false;
+                });
+            });
+        }
     }
 }
