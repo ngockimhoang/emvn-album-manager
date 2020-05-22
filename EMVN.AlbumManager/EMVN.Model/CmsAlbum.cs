@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,7 +36,7 @@ namespace EMVN.Model
             get
             {
                 DateTime releaseDate;
-                if (DateTime.TryParseExact(this.AlbumReleaseDate, "MM/dd/yyyy", System.Threading.Thread.CurrentThread.CurrentCulture, System.Globalization.DateTimeStyles.None, out releaseDate))
+                if (DateTime.TryParseExact(this.AlbumReleaseDate, "M/d/yyyy", CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out releaseDate))
                     return releaseDate;
                 return null;
             }
@@ -43,7 +44,7 @@ namespace EMVN.Model
             {
                 if (value.HasValue)
                 {
-                    AlbumReleaseDate = value.Value.ToString("MM/dd/yyyy");
+                    AlbumReleaseDate = value.Value.ToString("d/M/yyyy", CultureInfo.InvariantCulture);
                 }
                 else AlbumReleaseDate = string.Empty;
             }
