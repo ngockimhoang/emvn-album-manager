@@ -56,7 +56,7 @@
                                 <Label Grid.Row="4" Grid.Column="0">Artist:</Label>
                                 <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Album.AlbumArtist}"></TextBox>
                                 <Label Grid.Row="5" Grid.Column="0">Release Date:</Label>
-                                <xctk:DateTimePicker Grid.Row="5" Grid.Column="1" Value="{Binding Album.AlbumReleaseDate}" Format="ShortDate"></xctk:DateTimePicker>
+                                <xctk:DateTimePicker Grid.Row="5" Grid.Column="1" Value="{Binding Album.AlbumReleaseDate}" Format="Custom" FormatString="dd/MM/yyyy"></xctk:DateTimePicker>
                                 <Label Grid.Row="6" Grid.Column="0">Genre:</Label>
                                 <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Album.AlbumGenre}"></TextBox>
                                 <Label Grid.Row="7" Grid.Column="0">Label:</Label>
@@ -86,9 +86,11 @@
                                   CanUserDeleteRows="False">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Track Code" Binding="{Binding TrackCode}" IsReadOnly="True"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="ISRC" Width="100" Binding="{Binding ISRC}" IsReadOnly="True"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="Title" Width="*"  Binding="{Binding SongTitle}" IsReadOnly="True"></DataGridTextColumn>
-                                    <DataGridTemplateColumn>
+                                    <DataGridTextColumn Header="ISRC" Width="60" Binding="{Binding ISRC}" IsReadOnly="True"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Title" Width="180"  Binding="{Binding SongTitle}" IsReadOnly="True"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Filename" Width="180"  Binding="{Binding Filename}" IsReadOnly="True"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Original Title" Width="180"  Binding="{Binding OriginalSongTitle}" IsReadOnly="True"></DataGridTextColumn>
+                                    <DataGridTemplateColumn Width="50">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Button x:Name="_btnDeleteAsset" Click="_btnDeleteAsset_Click">Delete</Button>

@@ -36,7 +36,7 @@ namespace EMVN.Model
             get
             {
                 DateTime releaseDate;
-                if (DateTime.TryParseExact(this.AlbumReleaseDate, "M/d/yyyy", CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out releaseDate))
+                if (DateTime.TryParseExact(this.AlbumReleaseDate, "d/M/yyyy", CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out releaseDate))
                     return releaseDate;
                 return null;
             }

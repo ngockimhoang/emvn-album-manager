@@ -35,7 +35,8 @@ namespace EMVN.Model
         public string Filename { get; set; }
         [JsonProperty("track_code")]
         public int TrackCode { get; set; }
-
+        [JsonProperty("original_song_title")]
+        public string OriginalSongTitle { get; set; }
         #region External Properties
         [JsonIgnore]
         public string NewFilePath { get; set; }

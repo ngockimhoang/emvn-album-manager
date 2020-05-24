@@ -170,6 +170,19 @@ namespace EMVN.AlbumManager.ViewModel
             }
         }
 
+        public string OriginalSongTitle
+        {
+            get
+            {
+                return _cmsAsset.OriginalSongTitle;
+            }
+            set
+            {
+                _cmsAsset.OriginalSongTitle = value;
+                RaisePropertyChanged("OriginalSongTitle");
+            }
+        }
+
         public string NewFilePath
         {
             get
