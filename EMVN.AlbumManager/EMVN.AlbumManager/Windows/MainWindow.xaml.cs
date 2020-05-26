@@ -391,5 +391,30 @@ namespace EMVN.AlbumManager.Windows
         {
 
         }
+
+        private void _btnGRID_Click(object sender, RoutedEventArgs e)
+        {
+            _busyIndicator.IsBusy = true;
+            Task.Run(() =>
+            {
+                var albumCodes = _vm.Albums.Where(p => p.IsSelected).Select(p => p.AlbumCode).ToArray();
+                if (albumCodes.Any())
+                {
+                    var albumCodeString = string.Join(",", albumCodes);
+                    var startInfo = new ProcessStartInfo("cmd");
+                    startInfo.WorkingDirectory = Settings.YoutubeAssetCLIFolder;
+                    startInfo.Arguments = string.Format("/K go run \"{0}/main.go\" --album-code \"{1}\" generate-grid", Settings.YoutubeAssetCLIFolder, albumCodeString);
+                    startInfo.WindowStyle = ProcessWindowStyle.Normal;
+                    var process = Process.Start(startInfo);
+                    process.WaitForExit();
+                }
+            }).ContinueWith(task =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    _busyIndicator.IsBusy = false;
+                });
+            });
+        }
     }
 }
