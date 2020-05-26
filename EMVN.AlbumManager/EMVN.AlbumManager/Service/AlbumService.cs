@@ -120,6 +120,30 @@ namespace EMVN.AlbumManager.Service
             return null;
         }
 
+        public string UploadAlbumComposition(string albumCode)
+        {
+            var albumFolders = System.IO.Directory.GetDirectories(Settings.CompositionFolder, albumCode + "*");
+            if (albumFolders.Any())
+            {
+                using (var sshService = new SshService(Settings.SshUrl, Settings.SshPort, Settings.SshUsernameComposition, Settings.SshPasswordComposition, Settings.SshKeyComposition))
+                {
+                    var compositionFolder = albumFolders[0];
+                    sshService.UploadFolder(compositionFolder, null);
+
+                    //upload delivery.complete
+                    using (var stream = new MemoryStream())
+                    {
+                        stream.WriteByte(0);
+                        stream.Position = 0;
+                        sshService.UploadFile(stream, "delivery.complete", Path.GetFileName(compositionFolder));
+                    }
+
+                    return compositionFolder;
+                }
+            }
+            return null;
+        }
+
         public string GetDDEXFolder(string albumCode)
         {
             var albumFolders = System.IO.Directory.GetDirectories(Settings.DDEXFolder, albumCode + "*");
@@ -153,6 +177,45 @@ namespace EMVN.AlbumManager.Service
                             {
                                 stream.Position = 0;
                                 using (var fileStream = File.Create(Path.Combine(ddexFolder, ackFile)))
+                                {
+                                    stream.CopyTo(fileStream);
+                                }
+                            }
+
+                            completedFolders.Add(remoteFolder, 1);
+                        }
+                    }
+
+                    System.Threading.Thread.Sleep(TimeSpan.FromMinutes(1));
+                }
+            }
+        }
+
+        public void WatchUploadAlbumCompositionReport(string[] compositionFolderList)
+        {
+            var completedFolders = new Dictionary<string, int>();
+            while (completedFolders.Count != compositionFolderList.Count())
+            {
+                using (var sshService = new SshService(Settings.SshUrl, Settings.SshPort, Settings.SshUsernameComposition, Settings.SshPasswordComposition, Settings.SshKeyComposition))
+                {
+                    foreach (var compositionFolder in compositionFolderList)
+                    {
+                        var remoteFolder = Path.GetFileName(compositionFolder);
+                        if (completedFolders.ContainsKey(remoteFolder))
+                            continue;
+                        if (!sshService.Exists(remoteFolder))
+                        {
+                            completedFolders.Add(remoteFolder, 1);
+                            continue;
+                        }
+                        var files = sshService.ListDirectory(remoteFolder);
+                        var reportFile = files.Where(p => p.StartsWith("report-")).FirstOrDefault();
+                        if (reportFile != null)
+                        {
+                            using (var stream = sshService.DownloadFile(reportFile, remoteFolder))
+                            {
+                                stream.Position = 0;
+                                using (var fileStream = File.Create(Path.Combine(compositionFolder, reportFile)))
                                 {
                                     stream.CopyTo(fileStream);
                                 }

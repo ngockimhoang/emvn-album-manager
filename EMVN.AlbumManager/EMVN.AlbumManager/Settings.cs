@@ -23,16 +23,23 @@ namespace EMVN.AlbumManager
             SshUsername = ConfigurationManager.AppSettings["SshUsername"];
             SshPassword = ConfigurationManager.AppSettings["SshPassword"];
             SshKey = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), ConfigurationManager.AppSettings["SshKey"]);
+            SshUsernameComposition = ConfigurationManager.AppSettings["SshUsernameComposition"];
+            SshPasswordComposition = ConfigurationManager.AppSettings["SshPasswordComposition"];
+            SshKeyComposition = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), ConfigurationManager.AppSettings["SshKeyComposition"]);
         }
         public static string AlbumFolder { get; private set; }
         public static string ImageFolder { get; private set; }
         public static string TrackFolder { get; private set; }
         public static string DDEXFolder { get; private set; }
+        public static string CompositionFolder { get; private set; }
         public static string YoutubeAssetCLIFolder { get; private set; }
         public static string SshUrl { get; private set; }
         public static int SshPort { get; private set; }
         public static string SshUsername { get; private set; }
         public static string SshPassword { get; private set; }
         public static string SshKey { get; private set; }
+        public static string SshUsernameComposition { get; private set; }
+        public static string SshPasswordComposition { get; private set; }
+        public static string SshKeyComposition { get; private set; }
     }
 }

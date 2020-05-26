@@ -143,6 +143,7 @@
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30"></RowDefinition>
+                            <RowDefinition Height="30"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
                         <DockPanel Grid.Row="0" HorizontalAlignment="Left">
@@ -152,12 +153,17 @@
                             <Button Margin="3,3,3,3" Width="80" x:Name="_btnAllAM" Click="_btnAllAM_Click">All AM</Button>
                             <Button Margin="3,3,3,3" Width="80" x:Name="_btnAllAPL" Click="_btnAllAPL_Click">All APL</Button>
                             <Button Margin="3,3,3,3" Width="80" x:Name="_btnAllOthers" Click="_btnAllOthers_Click">All Others</Button>
+                            <Button Margin="3,3,3,3" Width="100" x:Name="_btnCustom" Click="_btnCustom_Click">Custom Action</Button>
+                        </DockPanel>
+                        <DockPanel Grid.Row="1" HorizontalAlignment="Left">
                             <Button Margin="3,3,3,3" Width="80" x:Name="_btnExportDDEX" Click="_btnExportDDEX_Click">DDEX</Button>
                             <Button Margin="3,3,3,3" Width="80" x:Name="_btnSubmitYouTube" Click="_btnSubmitYouTube_Click">Submit YT</Button>
                             <Button Margin="3,3,3,3" Width="80" x:Name="_btnGetResult" Click="_btnGetResult_Click">Get Result</Button>
-                            <Button Margin="3,3,3,3" Width="100" x:Name="_btnCustom" Click="_btnCustom_Click">Custom Action</Button>
+                            <Button Margin="100,3,3,3" Width="80" x:Name="_btnExportComposition" Click="_btnExportComposition_Click">Composition</Button>
+                            <Button Margin="3,3,3,3" Width="80" x:Name="_btnSubmitYouTubeComposition" Click="_btnSubmitYouTubeComposition_Click">Submit YT</Button>
+                            <Button Margin="3,3,3,3" Width="80" x:Name="_btnGetResultComposition" Click="_btnGetResultComposition_Click">Get Result</Button>
                         </DockPanel>
-                        <DataGrid AutoGenerateColumns="False" Grid.Row="1" ItemsSource="{Binding Albums}" SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False">
+                        <DataGrid AutoGenerateColumns="False" Grid.Row="2" ItemsSource="{Binding Albums}" SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False">
                             <DataGrid.Columns>
                                 <DataGridCheckBoxColumn Header="" Binding="{Binding IsSelected}" Width="40"></DataGridCheckBoxColumn>
                                 <DataGridTextColumn Header="Album Code" IsReadOnly="True" Binding="{Binding AlbumCode}" Width="100"></DataGridTextColumn>
@@ -177,6 +183,7 @@
                             <RowDefinition Height="30"></RowDefinition>
                             <RowDefinition Height="30"></RowDefinition>
                             <RowDefinition Height="30"></RowDefinition>
+                            <RowDefinition Height="30"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="200"></ColumnDefinition>
@@ -190,8 +197,10 @@
                         <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Settings.TrackFolder}" IsReadOnly="True"></TextBox>
                         <Label Grid.Row="3" Grid.Column="0">DDEX Folder:</Label>
                         <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Settings.DDEXFolder}" IsReadOnly="True"></TextBox>
-                        <Label Grid.Row="4" Grid.Column="0">YT Asset CLI Folder:</Label>
-                        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Settings.YoutubeAssetCLIFolder}" IsReadOnly="True"></TextBox>
+                        <Label Grid.Row="4" Grid.Column="0">Composition Folder:</Label>
+                        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Settings.CompositionFolder}" IsReadOnly="True"></TextBox>
+                        <Label Grid.Row="5" Grid.Column="0">YT Asset CLI Folder:</Label>
+                        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Settings.YoutubeAssetCLIFolder}" IsReadOnly="True"></TextBox>
                     </Grid>
                 </TabItem>
             </TabControl>

@@ -329,5 +329,67 @@ namespace EMVN.AlbumManager.Windows
                 });
             });
         }
+
+        private void _btnExportComposition_Click(object sender, RoutedEventArgs e)
+        {
+            _busyIndicator.IsBusy = true;
+            Task.Run(() =>
+            {
+                var albumCodes = _vm.Albums.Where(p => p.IsSelected).Select(p => p.AlbumCode).ToArray();
+                if (albumCodes.Any())
+                {
+                    var albumCodeString = string.Join(",", albumCodes);
+                    var startInfo = new ProcessStartInfo("cmd");
+                    startInfo.WorkingDirectory = Settings.YoutubeAssetCLIFolder;
+                    startInfo.Arguments = string.Format("/K go run \"{0}/main.go\" --album-code \"{1}\" export-composition", Settings.YoutubeAssetCLIFolder, albumCodeString);
+                    startInfo.WindowStyle = ProcessWindowStyle.Normal;
+                    var process = Process.Start(startInfo);
+                    process.WaitForExit();
+                }
+            }).ContinueWith(task =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    _busyIndicator.IsBusy = false;
+                });
+            });
+        }
+
+        private void _btnSubmitYouTubeComposition_Click(object sender, RoutedEventArgs e)
+        {
+            _busyIndicator.IsBusy = true;
+            Task.Run(() =>
+            {
+                var compositionFolderList = new List<string>();
+                foreach (var album in _vm.Albums)
+                {
+                    if (album.IsSelected)
+                    {
+                        var compositionFolder = _albumService.UploadAlbumComposition(album.AlbumCode);
+                        if (!string.IsNullOrEmpty(compositionFolder))
+                            compositionFolderList.Add(compositionFolder);
+                    }
+                }
+
+                if (compositionFolderList.Any())
+                {
+                    Task.Run(() =>
+                    {
+                        _albumService.WatchUploadAlbumReport(compositionFolderList.ToArray());
+                    });
+                }
+            }).ContinueWith(task =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    _busyIndicator.IsBusy = false;
+                });
+            });
+        }
+
+        private void _btnGetResultComposition_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
