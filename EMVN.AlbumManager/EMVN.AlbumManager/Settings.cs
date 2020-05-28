@@ -16,6 +16,7 @@ namespace EMVN.AlbumManager
             ImageFolder = ConfigurationManager.AppSettings["ImageFolder"];
             TrackFolder = ConfigurationManager.AppSettings["TrackFolder"];
             DDEXFolder = ConfigurationManager.AppSettings["DDEXFolder"];
+            CompositionFolder = ConfigurationManager.AppSettings["CompositionFolder"];
             YoutubeAssetCLIFolder = ConfigurationManager.AppSettings["YoutubeAssetCLIFolder"];
             SshUrl = ConfigurationManager.AppSettings["SshUrl"];
             SshPort = Convert.ToInt32(ConfigurationManager.AppSettings["SshPort"]);
