@@ -298,11 +298,6 @@ namespace EMVN.AlbumManager.Windows
 
         private void _btnCustom_Click(object sender, RoutedEventArgs e)
         {
-            //foreach (var album in _vm.Albums)
-            //{
-            //    if (album.IsAPL)
-            //        album.Label = "APL Publishing";
-            //}
         }
 
         private void _btnExportDDEX_Click(object sender, RoutedEventArgs e)
