@@ -44,6 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssetPublisher.cs" />
+    <Compile Include="AssetWriter.cs" />
     <Compile Include="CmsAlbum.cs" />
     <Compile Include="CmsAsset.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

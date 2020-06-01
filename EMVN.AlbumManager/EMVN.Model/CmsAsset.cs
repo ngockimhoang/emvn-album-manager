@@ -37,6 +37,11 @@ namespace EMVN.Model
         public int TrackCode { get; set; }
         [JsonProperty("original_song_title")]
         public string OriginalSongTitle { get; set; }
+        [JsonProperty("writers")]
+        public List<AssetWriter> Writers { get; set; }
+        [JsonProperty("publishers")]
+        public List<AssetPublisher> Publishers { get; set; }
+
         #region External Properties
         [JsonIgnore]
         public string NewFilePath { get; set; }
