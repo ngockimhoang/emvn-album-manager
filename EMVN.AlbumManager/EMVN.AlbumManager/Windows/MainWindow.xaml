@@ -166,7 +166,13 @@
                         </DockPanel>
                         <DataGrid AutoGenerateColumns="False" Grid.Row="2" ItemsSource="{Binding Albums}" SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False">
                             <DataGrid.Columns>
-                                <DataGridCheckBoxColumn Header="" Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}" Width="40"></DataGridCheckBoxColumn>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <CheckBox IsChecked="{Binding Path=IsSelected, UpdateSourceTrigger=PropertyChanged}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                                 <DataGridTextColumn Header="Album Code" IsReadOnly="True" Binding="{Binding AlbumCode}" Width="100"></DataGridTextColumn>
                                 <DataGridTextColumn Header="Album UPC" Binding="{Binding AlbumUPC}" Width="100"></DataGridTextColumn>
                                 <DataGridTextColumn Header="Album GRID" IsReadOnly="True" Binding="{Binding AlbumGRID}" Width="100"></DataGridTextColumn>
