@@ -104,7 +104,7 @@ namespace EMVN.AlbumManager.Service
                 using (var sshService = new SshService(Settings.SshUrl, Settings.SshPort, Settings.SshUsername, Settings.SshPassword, Settings.SshKey))
                 {
                     var ddexFolder = albumFolders[0];
-                    sshService.UploadFolder(ddexFolder, null);
+                    sshService.UploadFolder(ddexFolder);
 
                     //upload BatchComplete_.xml
                     using (var stream = new MemoryStream())
@@ -128,7 +128,7 @@ namespace EMVN.AlbumManager.Service
                 using (var sshService = new SshService(Settings.SshUrl, Settings.SshPort, Settings.SshUsernameComposition, Settings.SshPasswordComposition, Settings.SshKeyComposition))
                 {
                     var compositionFolder = albumFolders[0];
-                    sshService.UploadFolder(compositionFolder, null);
+                    sshService.UploadFolder(compositionFolder);
 
                     //upload delivery.complete
                     using (var stream = new MemoryStream())
@@ -181,15 +181,17 @@ namespace EMVN.AlbumManager.Service
                                     using (var fileStream = File.Create(Path.Combine(ddexFolder, ackFile)))
                                     {
                                         stream.CopyTo(fileStream);
+                                        fileStream.Flush();
                                     }
                                 }
 
                                 completedFolders.Add(remoteFolder, 1);
                             }
                         }
-
-                        System.Threading.Thread.Sleep(TimeSpan.FromMinutes(1));
                     }
+                    if (completedFolders.Count == ddexFolderList.Count())
+                        break;
+                    System.Threading.Thread.Sleep(TimeSpan.FromMinutes(1));
                 }
                 catch { }
             }
@@ -232,15 +234,17 @@ namespace EMVN.AlbumManager.Service
                                     using (var fileStream = File.Create(Path.Combine(compositionFolder, reportFile)))
                                     {
                                         stream.CopyTo(fileStream);
+                                        fileStream.Flush();
                                     }
                                 }
 
                                 completedFolders.Add(remoteFolder, 1);
                             }
-                        }
-
-                        System.Threading.Thread.Sleep(TimeSpan.FromMinutes(1));
+                        }                        
                     }
+                    if (completedFolders.Count == compositionFolderList.Count())
+                        break;
+                    System.Threading.Thread.Sleep(TimeSpan.FromMinutes(1));
                 }
                 catch { }
             }

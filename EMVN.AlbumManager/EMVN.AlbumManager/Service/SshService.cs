@@ -25,10 +25,8 @@ namespace EMVN.AlbumManager.Service
 
         private SftpClient _client;
 
-        public void UploadFile(string file, string remoteFolder)
+        public void UploadFile(string file)
         {
-            if (!string.IsNullOrEmpty(remoteFolder))
-                _client.ChangeDirectory(remoteFolder);
             using (var stream = new FileStream(file, FileMode.Open))
             {
                 _client.UploadFile(stream, Path.GetFileName(file));
@@ -37,12 +35,12 @@ namespace EMVN.AlbumManager.Service
 
         public void UploadFile(Stream stream, string filename, string remoteFolder)
         {
-            if (!string.IsNullOrEmpty(remoteFolder))
-                _client.ChangeDirectory(remoteFolder);
+            _client.ChangeDirectory(remoteFolder);
             _client.UploadFile(stream, filename);
+            _client.ChangeDirectory("/");
         }
 
-        public void UploadFolder(string folder, string parentFolder)
+        public void UploadFolder(string folder)
         {
             //create folder
             var remoteFolder = Path.GetFileName(folder);
@@ -55,13 +53,13 @@ namespace EMVN.AlbumManager.Service
             
             foreach (var file in Directory.GetFiles(folder, "*", SearchOption.TopDirectoryOnly))
             {
-                this.UploadFile(file, null);
+                this.UploadFile(file);
             }
 
             //sub folders
             foreach (var subFolder in Directory.GetDirectories(folder))
             {
-                this.UploadFolder(subFolder, remoteFolder);
+                this.UploadFolder(subFolder);
             }
 
             _client.ChangeDirectory("../");
@@ -72,6 +70,7 @@ namespace EMVN.AlbumManager.Service
             var stream = new MemoryStream();
             _client.ChangeDirectory(remoteFolder);
             _client.DownloadFile(file, stream);
+            _client.ChangeDirectory("/");
             return stream;
         }
 
