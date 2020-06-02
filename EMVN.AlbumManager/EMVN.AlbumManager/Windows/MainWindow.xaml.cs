@@ -392,7 +392,24 @@ namespace EMVN.AlbumManager.Windows
 
         private void _btnGetResultComposition_Click(object sender, RoutedEventArgs e)
         {
+            var compositionFolderList = new List<string>();
+            foreach (var album in _vm.Albums)
+            {
+                if (album.IsSelected)
+                {
+                    var compositionFolder = _albumService.GetCompositionFolder(album.AlbumCode);
+                    if (!string.IsNullOrEmpty(compositionFolder))
+                        compositionFolderList.Add(compositionFolder);
+                }
+            }
 
+            if (compositionFolderList.Any())
+            {
+                Task.Run(() =>
+                {
+                    _albumService.WatchUploadAlbumCompositionReport(compositionFolderList.ToArray());
+                });
+            }
         }
 
         private void _btnGRID_Click(object sender, RoutedEventArgs e)
