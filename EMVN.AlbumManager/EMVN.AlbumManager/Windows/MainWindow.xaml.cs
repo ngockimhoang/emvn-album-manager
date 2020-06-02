@@ -225,9 +225,13 @@ namespace EMVN.AlbumManager.Windows
                 {
                     if (album.IsSelected)
                     {
-                        var ddexFolder = _albumService.UploadAlbum(album.AlbumCode);
-                        if (!string.IsNullOrEmpty(ddexFolder))
-                            ddexFolderList.Add(ddexFolder);
+                        try
+                        {
+                            var ddexFolder = _albumService.UploadAlbum(album.AlbumCode);
+                            if (!string.IsNullOrEmpty(ddexFolder))
+                                ddexFolderList.Add(ddexFolder);
+                        }
+                        catch { }
                     }
                 }
 
@@ -360,9 +364,13 @@ namespace EMVN.AlbumManager.Windows
                 {
                     if (album.IsSelected)
                     {
-                        var compositionFolder = _albumService.UploadAlbumComposition(album.AlbumCode);
-                        if (!string.IsNullOrEmpty(compositionFolder))
-                            compositionFolderList.Add(compositionFolder);
+                        try
+                        {
+                            var compositionFolder = _albumService.UploadAlbumComposition(album.AlbumCode);
+                            if (!string.IsNullOrEmpty(compositionFolder))
+                                compositionFolderList.Add(compositionFolder);
+                        }
+                        catch { }
                     }
                 }
 
