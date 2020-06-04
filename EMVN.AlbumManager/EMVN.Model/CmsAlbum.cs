@@ -49,6 +49,14 @@ namespace EMVN.Model
                 else AlbumReleaseDate = string.Empty;
             }
         }
+        [JsonIgnore]
+        public string AlbumIdentifier
+        {
+            get
+            {
+                return !string.IsNullOrEmpty(this.AlbumUPC) ? this.AlbumUPC : this.AlbumGRID;
+            }
+        }
 
         #region External Properties
         [JsonIgnore]

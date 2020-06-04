@@ -43,8 +43,8 @@ namespace EMVN.AlbumManager.Service
                             }
                         }
                     }
-                    cmsAlbum.SoundRecordingSubmitStatus = this.GetSoundRecordingSubmitStatus(albumCode);
-                    cmsAlbum.CompositionSubmitStatus = this.GetCompositionSubmitStatus(albumCode);
+                    cmsAlbum.SoundRecordingSubmitStatus = this.GetSoundRecordingSubmitStatus(cmsAlbum);
+                    cmsAlbum.CompositionSubmitStatus = this.GetCompositionSubmitStatus(cmsAlbum);
                 }
                 return cmsAlbum;
             }
@@ -265,24 +265,38 @@ namespace EMVN.AlbumManager.Service
             }
         }
 
-        public string GetSoundRecordingSubmitStatus(string albumCode)
+        public string GetSoundRecordingSubmitStatus(CmsAlbum album)
         {
-            var ddexFolder = this.GetDDEXFolder(albumCode);
+            var ddexFolder = this.GetDDEXFolder(album.AlbumCode);
             if (!string.IsNullOrEmpty(ddexFolder))
             {
                 var ackFilePath = Directory.GetFiles(ddexFolder, "ACK_*");
-                return ackFilePath != null && ackFilePath.Any() ? "Submitted" : null;
+                if (ackFilePath != null && ackFilePath.Any())
+                    return "Submitted";
+                if (!string.IsNullOrEmpty(album.AlbumIdentifier))
+                {
+                    var ddexFilePath = Directory.GetFiles(ddexFolder, album.AlbumIdentifier + ".xml");
+                    if (ddexFilePath != null && ddexFilePath.Any())
+                        return "Package Generated";
+                }
             }
             return null;
         }
 
-        public string GetCompositionSubmitStatus(string albumCode)
+        public string GetCompositionSubmitStatus(CmsAlbum album)
         {
-            var compositionFolder = this.GetCompositionFolder(albumCode);
+            var compositionFolder = this.GetCompositionFolder(album.AlbumCode);
             if (!string.IsNullOrEmpty(compositionFolder))
             {
                 var reportFilePath = Directory.GetFiles(compositionFolder, "report-*");
-                return reportFilePath != null && reportFilePath.Any() ? "Submitted" : null;
+                if (reportFilePath != null && reportFilePath.Any())
+                    return "Submitted";
+                if (!string.IsNullOrEmpty(album.AlbumIdentifier))
+                {
+                    var compoisitionFilePath = Directory.GetFiles(compositionFolder, album.AlbumIdentifier + ".csv");
+                    if (compoisitionFilePath != null && compoisitionFilePath.Any())
+                        return "Package Generated";
+                }
             }
             return null;
         }
