@@ -234,14 +234,6 @@ namespace EMVN.AlbumManager.Windows
                         catch { }
                     }
                 }
-
-                //if (ddexFolderList.Any())
-                //{
-                //    Task.Run(() =>
-                //    {
-                //        _albumService.WatchUploadAlbumReport(ddexFolderList.ToArray());
-                //    });
-                //}
             }).ContinueWith(task =>
             {
                 Dispatcher.Invoke(() =>
@@ -270,6 +262,7 @@ namespace EMVN.AlbumManager.Windows
                 {
                     _albumService.WatchUploadAlbumReport(ddexFolderList.ToArray());
                 });
+                MessageBox.Show("Task running in background");
             }
         }
 
@@ -373,14 +366,6 @@ namespace EMVN.AlbumManager.Windows
                         catch { }
                     }
                 }
-
-                //if (compositionFolderList.Any())
-                //{
-                //    Task.Run(() =>
-                //    {
-                //        _albumService.WatchUploadAlbumReport(compositionFolderList.ToArray());
-                //    });
-                //}
             }).ContinueWith(task =>
             {
                 Dispatcher.Invoke(() =>
@@ -409,6 +394,7 @@ namespace EMVN.AlbumManager.Windows
                 {
                     _albumService.WatchUploadAlbumCompositionReport(compositionFolderList.ToArray());
                 });
+                MessageBox.Show("Task running in background");
             }
         }
 
