@@ -43,6 +43,8 @@ namespace EMVN.AlbumManager.Service
                             }
                         }
                     }
+                    cmsAlbum.SoundRecordingSubmitStatus = this.GetSoundRecordingSubmitStatus(albumCode);
+                    cmsAlbum.CompositionSubmitStatus = this.GetCompositionSubmitStatus(albumCode);
                 }
                 return cmsAlbum;
             }
@@ -239,6 +241,19 @@ namespace EMVN.AlbumManager.Service
                                 }
 
                                 completedFolders.Add(remoteFolder, 1);
+                            }
+                            var errorFile = files.Where(p => p.StartsWith("errors-")).FirstOrDefault();
+                            if (errorFile != null)
+                            {
+                                using (var stream = sshService.DownloadFile(errorFile, remoteFolder))
+                                {
+                                    stream.Position = 0;
+                                    using (var fileStream = File.Create(Path.Combine(compositionFolder, errorFile)))
+                                    {
+                                        stream.CopyTo(fileStream);
+                                        fileStream.Flush();
+                                    }
+                                }
                             }
                         }                        
                     }

@@ -178,8 +178,8 @@
                                 <DataGridTextColumn Header="Album GRID" IsReadOnly="True" Binding="{Binding AlbumGRID}" Width="100"></DataGridTextColumn>
                                 <DataGridTextColumn Header="Label" Binding="{Binding Label}" Width="100"></DataGridTextColumn>
                                 <DataGridTextColumn Header="Album Title" Binding="{Binding AlbumTitle}" Width="300"></DataGridTextColumn>
-                                <DataGridTextColumn Header="SR Status" Binding="{Binding SoundRecordingSubmitStatus}" Width="150"></DataGridTextColumn>
-                                <DataGridTextColumn Header="Composition Status" Binding="{Binding CompositionSubmitStatus}" Width="150"></DataGridTextColumn>
+                                <DataGridTextColumn Header="SR Status" Binding="{Binding SoundRecordingSubmitStatus}" IsReadOnly="True" Width="150"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Composition Status" Binding="{Binding CompositionSubmitStatus}" IsReadOnly="True" Width="150"></DataGridTextColumn>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
