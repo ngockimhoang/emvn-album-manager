@@ -249,5 +249,27 @@ namespace EMVN.AlbumManager.Service
                 catch { }
             }
         }
+
+        public string GetSoundRecordingSubmitStatus(string albumCode)
+        {
+            var ddexFolder = this.GetDDEXFolder(albumCode);
+            if (!string.IsNullOrEmpty(ddexFolder))
+            {
+                var ackFilePath = Directory.GetFiles(ddexFolder, "ACK_*");
+                return ackFilePath != null && ackFilePath.Any() ? "Submitted" : null;
+            }
+            return null;
+        }
+
+        public string GetCompositionSubmitStatus(string albumCode)
+        {
+            var compositionFolder = this.GetCompositionFolder(albumCode);
+            if (!string.IsNullOrEmpty(compositionFolder))
+            {
+                var reportFilePath = Directory.GetFiles(compositionFolder, "report-*");
+                return reportFilePath != null && reportFilePath.Any() ? "Submitted" : null;
+            }
+            return null;
+        }
     }
 }

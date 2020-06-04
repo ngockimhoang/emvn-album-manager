@@ -53,6 +53,10 @@ namespace EMVN.Model
         #region External Properties
         [JsonIgnore]
         public string NewAlbumImagePath { get; set; }
+        [JsonIgnore]
+        public string SoundRecordingSubmitStatus { get; set; }
+        [JsonIgnore]
+        public string CompositionSubmitStatus { get; set; }
         #endregion
     }
 }

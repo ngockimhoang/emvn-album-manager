@@ -207,6 +207,22 @@ namespace EMVN.AlbumManager.ViewModel
                        _cmsAlbum.AlbumCode.StartsWith("SP");
             }
         }
+        
+        public string SoundRecordingSubmitStatus
+        {
+            get
+            {
+                return _cmsAlbum.SoundRecordingSubmitStatus;
+            }            
+        }
+
+        public string CompositionSubmitStatus
+        {
+            get
+            {
+                return _cmsAlbum.CompositionSubmitStatus;
+            }
+        }
 
         public CmsAssetVM AddCmsAsset(CmsAsset cmsAsset)
         {
