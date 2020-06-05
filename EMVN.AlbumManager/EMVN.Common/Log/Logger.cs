@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog.Targets;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,12 +29,13 @@ namespace EMVN.Common.Log
         }
         private Logger()
         {
-
+            Target.Register("custom", typeof(CustomTarget));
+            _logger = NLog.LogManager.GetCurrentClassLogger();
         }
         #endregion
 
         #region Fields
-        private readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
+        private readonly NLog.Logger _logger = null;
         #endregion
 
         #region Info

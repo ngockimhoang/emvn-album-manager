@@ -9,5 +9,13 @@ namespace EMVN.AlbumManager.ViewModel
 {
     public class LogEntryVM: BaseVM
     {
+        public LogEntryVM(string message, DateTime timestamp)
+        {
+            this.Message = message;
+            this.Timestamp = timestamp;
+        }
+
+        public string Message { get; set; }
+        public DateTime Timestamp { get; set; }
     }
 }

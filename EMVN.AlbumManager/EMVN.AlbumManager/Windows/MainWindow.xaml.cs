@@ -1,5 +1,6 @@
 ﻿using EMVN.AlbumManager.Service;
 using EMVN.AlbumManager.ViewModel;
+using EMVN.Common.Log;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;

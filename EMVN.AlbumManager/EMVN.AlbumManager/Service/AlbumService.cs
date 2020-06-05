@@ -1,4 +1,5 @@
 ﻿using EMVN.Common.JSON;
+using EMVN.Common.Log;
 using EMVN.Model;
 using Newtonsoft.Json;
 using System;
@@ -100,6 +101,7 @@ namespace EMVN.AlbumManager.Service
 
         public string UploadAlbum(string albumCode)
         {
+            Logger.Instance.Info("Uploading album {0}", albumCode);
             var albumFolders = System.IO.Directory.GetDirectories(Settings.DDEXFolder, albumCode + "*");
             if (albumFolders.Any())
             {
@@ -124,6 +126,7 @@ namespace EMVN.AlbumManager.Service
 
         public string UploadAlbumComposition(string albumCode)
         {
+            Logger.Instance.Info("Uploading album composition {0}", albumCode);
             var albumFolders = System.IO.Directory.GetDirectories(Settings.CompositionFolder, albumCode + "*");
             if (albumFolders.Any())
             {

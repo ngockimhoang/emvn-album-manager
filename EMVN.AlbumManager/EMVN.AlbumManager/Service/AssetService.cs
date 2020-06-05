@@ -43,7 +43,6 @@ namespace EMVN.AlbumManager.Service
             }
         }
 
-
         public bool CheckAssetExists(string albumCode, string filename)
         {
             var filePath = System.IO.Path.Combine(Settings.TrackFolder, albumCode, filename);

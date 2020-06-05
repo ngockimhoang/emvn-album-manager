@@ -1,4 +1,5 @@
-﻿using Renci.SshNet;
+﻿using EMVN.Common.Log;
+using Renci.SshNet;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,6 +28,7 @@ namespace EMVN.AlbumManager.Service
 
         public void UploadFile(string file)
         {
+            Logger.Instance.Info("Uploading file: {0}", file);
             using (var stream = new FileStream(file, FileMode.Open))
             {
                 _client.UploadFile(stream, Path.GetFileName(file));
@@ -35,6 +37,7 @@ namespace EMVN.AlbumManager.Service
 
         public void UploadFile(Stream stream, string filename, string remoteFolder)
         {
+            Logger.Instance.Info("Uploading file: {0}", filename);
             _client.ChangeDirectory(remoteFolder);
             _client.UploadFile(stream, filename);
             _client.ChangeDirectory("/");
@@ -42,6 +45,7 @@ namespace EMVN.AlbumManager.Service
 
         public void UploadFolder(string folder)
         {
+            Logger.Instance.Info("Uploading folder: {0}", folder);
             //create folder
             var remoteFolder = Path.GetFileName(folder);
 
@@ -67,6 +71,7 @@ namespace EMVN.AlbumManager.Service
 
         public Stream DownloadFile(string file, string remoteFolder)
         {
+            Logger.Instance.Info("Dowloading file: {0}/{1}", remoteFolder, file);
             var stream = new MemoryStream();
             _client.ChangeDirectory(remoteFolder);
             _client.DownloadFile(file, stream);
@@ -76,6 +81,7 @@ namespace EMVN.AlbumManager.Service
 
         public string[] ListDirectory(string remoteFolder)
         {
+            Logger.Instance.Info("Listing directory {0}", remoteFolder);
             var files = _client.ListDirectory(remoteFolder);
             return files.Select(p => p.Name).ToArray();
         }

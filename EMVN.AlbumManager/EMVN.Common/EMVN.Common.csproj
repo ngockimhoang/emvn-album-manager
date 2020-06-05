@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="JSON\CustomJSON.cs" />
+    <Compile Include="Log\CustomTarget.cs" />
     <Compile Include="Log\Logger.cs" />
     <Compile Include="ViewModel\BaseVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

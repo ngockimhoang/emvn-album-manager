@@ -1,4 +1,5 @@
-﻿using EMVN.Common.ViewModel;
+﻿using EMVN.Common.Log;
+using EMVN.Common.ViewModel;
 using EMVN.Model;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,12 @@ namespace EMVN.AlbumManager.ViewModel
     {
         public MainWindowVM()
         {
+            CustomTarget.OnLog += CustomTarget_OnLog;
             Settings = new SettingsVM();
             Albums = new ObservableCollection<CmsAlbumVM>();
             Logs = new ObservableCollection<LogEntryVM>();
         }
-
+       
         public SettingsVM Settings { get; private set; }
         private CmsAlbumVM _album;
         public CmsAlbumVM Album
@@ -89,6 +91,11 @@ namespace EMVN.AlbumManager.ViewModel
             this.Album = new CmsAlbumVM(cmsAlbum);
             this.Asset = null;
             this.IsEdit = true;
+        }
+
+        private void CustomTarget_OnLog(string message, DateTime timestamp)
+        {
+            this.Logs.Add(new LogEntryVM(message, timestamp));
         }
 
         public ObservableCollection<CmsAlbumVM> Albums { get; private set; }
