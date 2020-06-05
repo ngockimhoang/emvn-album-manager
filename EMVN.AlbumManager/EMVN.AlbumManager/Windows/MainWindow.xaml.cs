@@ -425,13 +425,38 @@ namespace EMVN.AlbumManager.Windows
             });
         }
 
-
         private void CustomTarget_OnLog(string message, DateTime timestamp)
         {
             this.Dispatcher.Invoke(() =>
             {
                 _vm.Logs.Add(new LogEntryVM(message, timestamp));
             });
+        }
+
+        private bool _autoScroll = true;
+        private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            // User scroll event : set or unset autoscroll mode
+            if (e.ExtentHeightChange == 0)
+            {   // Content unchanged : user scroll event
+                if ((e.Source as ScrollViewer).VerticalOffset == (e.Source as ScrollViewer).ScrollableHeight)
+                {   // Scroll bar is in bottom
+                    // Set autoscroll mode
+                    _autoScroll = true;
+                }
+                else
+                {   // Scroll bar isn't in bottom
+                    // Unset autoscroll mode
+                    _autoScroll = false;
+                }
+            }
+
+            // Content scroll event : autoscroll eventually
+            if (_autoScroll && e.ExtentHeightChange != 0)
+            {   // Content changed and autoscroll mode set
+                // Autoscroll
+                (e.Source as ScrollViewer).ScrollToVerticalOffset((e.Source as ScrollViewer).ExtentHeight);
+            }
         }
     }
 }
