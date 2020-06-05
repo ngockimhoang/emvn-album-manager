@@ -94,6 +94,7 @@
     <Compile Include="Settings.cs" />
     <Compile Include="ViewModel\CmsAlbumVM.cs" />
     <Compile Include="ViewModel\CmsAssetVM.cs" />
+    <Compile Include="ViewModel\LogEntryVM.cs" />
     <Compile Include="ViewModel\MainWindowVM.cs" />
     <Compile Include="ViewModel\SettingsVM.cs" />
     <Compile Include="Windows\MainWindow.xaml.cs">

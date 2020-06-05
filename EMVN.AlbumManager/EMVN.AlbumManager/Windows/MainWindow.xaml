@@ -4,11 +4,55 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EMVN.AlbumManager"
+        xmlns:localVM="clr-namespace:EMVN.AlbumManager.ViewModel"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="Album Manager" Height="560" Width="1200">
+        Title="Album Manager" Height="770" Width="1200">
+    <Window.Resources>
+        <Style TargetType="ItemsControl" x:Key="LogViewerStyle">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <ScrollViewer CanContentScroll="True">
+                            <ItemsPresenter/>
+                        </ScrollViewer>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel IsItemsHost="True"/>
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <DataTemplate DataType="{x:Type localVM:LogEntryVM}">
+            <Grid IsSharedSizeScope="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition SharedSizeGroup="Index" Width="Auto"/>
+                    <ColumnDefinition SharedSizeGroup="Date" Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="{Binding DateTime}" Grid.Column="0"
+                       FontWeight="Bold" Margin="5,0,5,0"/>
+
+                <TextBlock Text="{Binding Index}" Grid.Column="1"
+                       FontWeight="Bold" Margin="0,0,2,0" />
+
+                <TextBlock Text="{Binding Message}" Grid.Column="2"
+                       TextWrapping="Wrap"/>
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
     <Grid>
-        <xctk:BusyIndicator x:Name="_busyIndicator">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="7*"></RowDefinition>
+            <RowDefinition Height="3*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <xctk:BusyIndicator x:Name="_busyIndicator" Grid.Row="0">
             <TabControl>
                 <TabItem Header="Album">
                     <Grid>
@@ -214,5 +258,19 @@
                 </TabItem>
             </TabControl>
         </xctk:BusyIndicator>
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding Logs}" Style="{StaticResource LogViewerStyle}">
+            <ItemsControl.Template>
+                <ControlTemplate>
+                    <ScrollViewer CanContentScroll="True">
+                        <ItemsPresenter/>
+                    </ScrollViewer>
+                </ControlTemplate>
+            </ItemsControl.Template>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel IsItemsHost="True"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
     </Grid>
 </Window>

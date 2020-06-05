@@ -15,6 +15,7 @@ namespace EMVN.AlbumManager.ViewModel
         {
             Settings = new SettingsVM();
             Albums = new ObservableCollection<CmsAlbumVM>();
+            Logs = new ObservableCollection<LogEntryVM>();
         }
 
         public SettingsVM Settings { get; private set; }
@@ -91,5 +92,6 @@ namespace EMVN.AlbumManager.ViewModel
         }
 
         public ObservableCollection<CmsAlbumVM> Albums { get; private set; }
+        public ObservableCollection<LogEntryVM> Logs { get; private set; }
     }
 }
