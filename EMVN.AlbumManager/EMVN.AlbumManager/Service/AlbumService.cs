@@ -26,6 +26,7 @@ namespace EMVN.AlbumManager.Service
 
         public CmsAlbum LoadAlbum(string albumCode)
         {
+            Logger.Instance.Info("Loading album {0}", albumCode);
             var albumFilePath = System.IO.Path.Combine(_albumFolder, albumCode, albumCode + ".json");
             if (System.IO.File.Exists(albumFilePath))
             {
