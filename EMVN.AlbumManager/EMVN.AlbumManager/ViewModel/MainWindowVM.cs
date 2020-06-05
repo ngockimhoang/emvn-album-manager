@@ -14,7 +14,6 @@ namespace EMVN.AlbumManager.ViewModel
     {
         public MainWindowVM()
         {
-            CustomTarget.OnLog += CustomTarget_OnLog;
             Settings = new SettingsVM();
             Albums = new ObservableCollection<CmsAlbumVM>();
             Logs = new ObservableCollection<LogEntryVM>();
@@ -93,12 +92,7 @@ namespace EMVN.AlbumManager.ViewModel
             this.IsEdit = true;
         }
 
-        private void CustomTarget_OnLog(string message, DateTime timestamp)
-        {
-            this.Logs.Add(new LogEntryVM(message, timestamp));
-        }
-
         public ObservableCollection<CmsAlbumVM> Albums { get; private set; }
-        public ObservableCollection<LogEntryVM> Logs { get; private set; }
+        public ObservableCollection<LogEntryVM> Logs { get; private set; }        
     }
 }

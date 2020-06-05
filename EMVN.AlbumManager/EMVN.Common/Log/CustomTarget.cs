@@ -16,7 +16,7 @@ namespace EMVN.Common.Log
         {
             if (OnLog != null)
             {
-                OnLog(logEvent.Message, logEvent.TimeStamp);
+                OnLog(logEvent.FormattedMessage, logEvent.TimeStamp);
             }
         }
 

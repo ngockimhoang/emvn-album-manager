@@ -28,6 +28,7 @@ namespace EMVN.AlbumManager.Windows
         public MainWindow()
         {
             InitializeComponent();
+            CustomTarget.OnLog += CustomTarget_OnLog;
             _vm = new MainWindowVM();
             this.DataContext = _vm;
             _albumService = new AlbumService();
@@ -421,6 +422,15 @@ namespace EMVN.AlbumManager.Windows
                 {
                     _busyIndicator.IsBusy = false;
                 });
+            });
+        }
+
+
+        private void CustomTarget_OnLog(string message, DateTime timestamp)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                _vm.Logs.Add(new LogEntryVM(message, timestamp));
             });
         }
     }
