@@ -213,7 +213,7 @@
                                 </DataGridTemplateColumn>
                                 <DataGridTextColumn Header="Album Code" IsReadOnly="True" Binding="{Binding AlbumCode}" Width="100"></DataGridTextColumn>
                                 <DataGridTextColumn Header="Album UPC" Binding="{Binding AlbumUPC}" Width="100"></DataGridTextColumn>
-                                <DataGridTextColumn Header="Album GRID" IsReadOnly="True" Binding="{Binding AlbumGRID}" Width="100"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Album GRID" IsReadOnly="True" Binding="{Binding AlbumGRID}" Width="120"></DataGridTextColumn>
                                 <DataGridTextColumn Header="Label" Binding="{Binding Label}" Width="100"></DataGridTextColumn>
                                 <DataGridTextColumn Header="Album Title" Binding="{Binding AlbumTitle}" Width="300"></DataGridTextColumn>
                                 <DataGridTextColumn Header="SR Status" Binding="{Binding SoundRecordingSubmitStatus}" IsReadOnly="True" Width="150"></DataGridTextColumn>
