@@ -48,10 +48,12 @@
     <Compile Include="AssetWriter.cs" />
     <Compile Include="CmsAlbum.cs" />
     <Compile Include="CmsAsset.cs" />
+    <Compile Include="DDEX\AckMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
