@@ -158,48 +158,39 @@ namespace EMVN.AlbumManager.Service
             return null;
         }
 
-        public void WatchUploadAlbumReport(string[] ddexFolderList)
+        public void GetUploadAlbumReport(string[] ddexFolderList)
         {
-            var completedFolders = new Dictionary<string, int>();
-            while (completedFolders.Count != ddexFolderList.Count())
+            try
             {
-                try
+                using (var sshService = new SshService(Settings.SshUrl, Settings.SshPort, Settings.SshUsername, Settings.SshPassword, Settings.SshKey))
                 {
-                    using (var sshService = new SshService(Settings.SshUrl, Settings.SshPort, Settings.SshUsername, Settings.SshPassword, Settings.SshKey))
+                    foreach (var ddexFolder in ddexFolderList)
                     {
-                        foreach (var ddexFolder in ddexFolderList)
+                        var remoteFolder = Path.GetFileName(ddexFolder);
+                        if (!sshService.Exists(remoteFolder))
+                        {                            
+                            continue;
+                        }
+                        var files = sshService.ListDirectory(remoteFolder);
+                        var ackFile = files.Where(p => p.StartsWith("ACK_")).FirstOrDefault();
+                        if (ackFile != null)
                         {
-                            var remoteFolder = Path.GetFileName(ddexFolder);
-                            if (completedFolders.ContainsKey(remoteFolder))
-                                continue;
-                            if (!sshService.Exists(remoteFolder))
+                            using (var stream = sshService.DownloadFile(ackFile, remoteFolder))
                             {
-                                completedFolders.Add(remoteFolder, 1);
-                                continue;
-                            }
-                            var files = sshService.ListDirectory(remoteFolder);
-                            var ackFile = files.Where(p => p.StartsWith("ACK_")).FirstOrDefault();
-                            if (ackFile != null)
-                            {
-                                using (var stream = sshService.DownloadFile(ackFile, remoteFolder))
+                                stream.Position = 0;
+                                using (var fileStream = File.Create(Path.Combine(ddexFolder, ackFile)))
                                 {
-                                    stream.Position = 0;
-                                    using (var fileStream = File.Create(Path.Combine(ddexFolder, ackFile)))
-                                    {
-                                        stream.CopyTo(fileStream);
-                                        fileStream.Flush();
-                                    }
+                                    stream.CopyTo(fileStream);
+                                    fileStream.Flush();
                                 }
-
-                                completedFolders.Add(remoteFolder, 1);
                             }
                         }
                     }
-                    if (completedFolders.Count == ddexFolderList.Count())
-                        break;
-                    System.Threading.Thread.Sleep(TimeSpan.FromMinutes(1));
-                }
-                catch { }
+                }         
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.Error(ex);
             }
         }
 
@@ -211,61 +202,52 @@ namespace EMVN.AlbumManager.Service
             return null;
         }
 
-        public void WatchUploadAlbumCompositionReport(string[] compositionFolderList)
+        public void GetUploadAlbumCompositionReport(string[] compositionFolderList)
         {
-            var completedFolders = new Dictionary<string, int>();
-            while (completedFolders.Count != compositionFolderList.Count())
+            try
             {
-                try
+                using (var sshService = new SshService(Settings.SshUrl, Settings.SshPort, Settings.SshUsernameComposition, Settings.SshPasswordComposition, Settings.SshKeyComposition))
                 {
-                    using (var sshService = new SshService(Settings.SshUrl, Settings.SshPort, Settings.SshUsernameComposition, Settings.SshPasswordComposition, Settings.SshKeyComposition))
+                    foreach (var compositionFolder in compositionFolderList)
                     {
-                        foreach (var compositionFolder in compositionFolderList)
+                        var remoteFolder = Path.GetFileName(compositionFolder);                     
+                        if (!sshService.Exists(remoteFolder))
+                        {                            
+                            continue;
+                        }
+                        var files = sshService.ListDirectory(remoteFolder);
+                        var reportFile = files.Where(p => p.StartsWith("report-")).FirstOrDefault();
+                        if (reportFile != null)
                         {
-                            var remoteFolder = Path.GetFileName(compositionFolder);
-                            if (completedFolders.ContainsKey(remoteFolder))
-                                continue;
-                            if (!sshService.Exists(remoteFolder))
+                            using (var stream = sshService.DownloadFile(reportFile, remoteFolder))
                             {
-                                completedFolders.Add(remoteFolder, 1);
-                                continue;
-                            }
-                            var files = sshService.ListDirectory(remoteFolder);
-                            var reportFile = files.Where(p => p.StartsWith("report-")).FirstOrDefault();
-                            if (reportFile != null)
-                            {
-                                using (var stream = sshService.DownloadFile(reportFile, remoteFolder))
+                                stream.Position = 0;
+                                using (var fileStream = File.Create(Path.Combine(compositionFolder, reportFile)))
                                 {
-                                    stream.Position = 0;
-                                    using (var fileStream = File.Create(Path.Combine(compositionFolder, reportFile)))
-                                    {
-                                        stream.CopyTo(fileStream);
-                                        fileStream.Flush();
-                                    }
-                                }
-
-                                completedFolders.Add(remoteFolder, 1);
-                            }
-                            var errorFile = files.Where(p => p.StartsWith("errors-")).FirstOrDefault();
-                            if (errorFile != null)
-                            {
-                                using (var stream = sshService.DownloadFile(errorFile, remoteFolder))
-                                {
-                                    stream.Position = 0;
-                                    using (var fileStream = File.Create(Path.Combine(compositionFolder, errorFile)))
-                                    {
-                                        stream.CopyTo(fileStream);
-                                        fileStream.Flush();
-                                    }
+                                    stream.CopyTo(fileStream);
+                                    fileStream.Flush();
                                 }
                             }
-                        }                        
+                        }
+                        var errorFile = files.Where(p => p.StartsWith("errors-")).FirstOrDefault();
+                        if (errorFile != null)
+                        {
+                            using (var stream = sshService.DownloadFile(errorFile, remoteFolder))
+                            {
+                                stream.Position = 0;
+                                using (var fileStream = File.Create(Path.Combine(compositionFolder, errorFile)))
+                                {
+                                    stream.CopyTo(fileStream);
+                                    fileStream.Flush();
+                                }
+                            }
+                        }
                     }
-                    if (completedFolders.Count == compositionFolderList.Count())
-                        break;
-                    System.Threading.Thread.Sleep(TimeSpan.FromMinutes(1));
-                }
-                catch { }
+                }              
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.Error(ex);
             }
         }
 

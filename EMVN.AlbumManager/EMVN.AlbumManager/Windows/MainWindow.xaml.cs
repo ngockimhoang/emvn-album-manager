@@ -262,7 +262,7 @@ namespace EMVN.AlbumManager.Windows
             {
                 Task.Run(() =>
                 {
-                    _albumService.WatchUploadAlbumReport(ddexFolderList.ToArray());
+                    _albumService.GetUploadAlbumReport(ddexFolderList.ToArray());
                 });
                 MessageBox.Show("Task running in background");
             }
@@ -297,6 +297,13 @@ namespace EMVN.AlbumManager.Windows
 
         private void _btnCustom_Click(object sender, RoutedEventArgs e)
         {
+            var total = 0;
+            foreach (var albumVM in _vm.Albums)
+            {
+                if (albumVM.IsSelected)
+                    total += albumVM.Assets.Where(p => !string.IsNullOrEmpty(p.AssetID)).Count();
+            }
+            MessageBox.Show(total.ToString());
         }
 
         private void _btnExportDDEX_Click(object sender, RoutedEventArgs e)
@@ -394,7 +401,7 @@ namespace EMVN.AlbumManager.Windows
             {
                 Task.Run(() =>
                 {
-                    _albumService.WatchUploadAlbumCompositionReport(compositionFolderList.ToArray());
+                    _albumService.GetUploadAlbumCompositionReport(compositionFolderList.ToArray());
                 });
                 MessageBox.Show("Task running in background");
             }
