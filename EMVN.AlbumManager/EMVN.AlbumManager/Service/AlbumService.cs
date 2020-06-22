@@ -100,6 +100,30 @@ namespace EMVN.AlbumManager.Service
             return albums;
         }
 
+        public List<CmsAlbum> GetAllAlbums(string fromAlbumCode, string toAlbumCode)
+        {
+            var albums = new List<CmsAlbum>();
+            var folders = System.IO.Directory.GetDirectories(_albumFolder);
+            foreach (var folder in folders)
+            {
+                var albumCode = System.IO.Path.GetFileName(folder);
+                if (!string.IsNullOrEmpty(fromAlbumCode))
+                {
+                    if (string.Compare(fromAlbumCode, albumCode) > 0)
+                        continue;
+                }
+                if (!string.IsNullOrEmpty(toAlbumCode))
+                {
+                    if (string.Compare(albumCode, toAlbumCode) > 0)
+                        continue;
+                }
+                var album = this.LoadAlbum(albumCode);
+                if (album != null)
+                    albums.Add(album);
+            }
+            return albums;
+        }
+
         public string UploadAlbum(string albumCode)
         {
             Logger.Instance.Info("Uploading album {0}", albumCode);

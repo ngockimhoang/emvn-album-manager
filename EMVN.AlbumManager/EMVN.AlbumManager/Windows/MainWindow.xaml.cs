@@ -169,9 +169,11 @@ namespace EMVN.AlbumManager.Windows
         {
             _vm.Albums.Clear();
             _busyIndicator.IsBusy = true;
+            var fromAlbumCode = _tbxFromAlbumCode.Text;
+            var toAlbumCode = _tbxToAlbumCode.Text;
             Task.Run(() =>
             {
-                var albums = _albumService.GetAllAlbums();
+                var albums = _albumService.GetAllAlbums(fromAlbumCode, toAlbumCode);
                 var albumVMs = new List<CmsAlbumVM>();
                 foreach (var album in albums)
                 {
