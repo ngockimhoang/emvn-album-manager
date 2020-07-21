@@ -37,6 +37,8 @@ namespace EMVN.Model
         public int TrackCode { get; set; }
         [JsonProperty("original_song_title")]
         public string OriginalSongTitle { get; set; }
+        [JsonProperty("original_isrc")]
+        public string OriginalISRC { get; set; }
         [JsonProperty("writers")]
         public List<AssetWriter> Writers { get; set; }
         [JsonProperty("publishers")]
