@@ -23,6 +23,8 @@ namespace EMVN.Model
         public string Genre { get; set; }
         [JsonProperty("isrc")]
         public string ISRC { get; set; }
+        [JsonProperty("original_isrc")]
+        public string OriginalISRC { get; set; }
         [JsonProperty("song_title")]
         public string SongTitle { get; set; }
         [JsonProperty("label")]
@@ -36,9 +38,7 @@ namespace EMVN.Model
         [JsonProperty("track_code")]
         public int TrackCode { get; set; }
         [JsonProperty("original_song_title")]
-        public string OriginalSongTitle { get; set; }
-        [JsonProperty("original_isrc")]
-        public string OriginalISRC { get; set; }
+        public string OriginalSongTitle { get; set; }        
         [JsonProperty("writers")]
         public List<AssetWriter> Writers { get; set; }
         [JsonProperty("publishers")]
