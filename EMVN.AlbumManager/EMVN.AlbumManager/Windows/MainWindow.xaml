@@ -124,10 +124,11 @@
                                   CanUserDeleteRows="False">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Track Code" Binding="{Binding TrackCode}" IsReadOnly="True"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="ISRC" Width="60" Binding="{Binding ISRC}" IsReadOnly="True"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="ISRC" Width="80" Binding="{Binding ISRC}" IsReadOnly="True"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Title" Width="180"  Binding="{Binding SongTitle}" IsReadOnly="True"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Filename" Width="180"  Binding="{Binding Filename}" IsReadOnly="True"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Original Title" Width="180"  Binding="{Binding OriginalSongTitle}" IsReadOnly="True"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Asset ID" Width="140" Binding="{Binding AssetID}" IsReadOnly="True"></DataGridTextColumn>
                                     <DataGridTemplateColumn Width="50">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
