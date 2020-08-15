@@ -189,6 +189,10 @@ namespace EMVN.AlbumManager.ViewModel
             {
                 return _cmsAsset.NewFilePath;
             }
+            set
+            {
+                _cmsAsset.NewFilePath = value;
+            }
         }
     }
 }

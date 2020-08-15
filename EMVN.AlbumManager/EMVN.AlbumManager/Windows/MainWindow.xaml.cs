@@ -470,5 +470,39 @@ namespace EMVN.AlbumManager.Windows
                 (e.Source as ScrollViewer).ScrollToVerticalOffset((e.Source as ScrollViewer).ExtentHeight);
             }
         }
+
+        private void _btnAttachMp3_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new OpenFileDialog();
+            dialog.CheckFileExists = true;
+            dialog.Multiselect = true;
+            dialog.Filter = "mp3|*.mp3";
+            if (dialog.ShowDialog().Value)
+            {
+                try
+                {                    
+                    foreach (var filename in dialog.FileNames)
+                    {
+                        if (_assetService.CheckAssetExists(_vm.Album.AlbumCode, System.IO.Path.GetFileName(filename))
+                            || _vm.Album.Assets.Where(p => !string.IsNullOrEmpty(p.NewFilePath) && p.NewFilePath.Equals(filename, StringComparison.InvariantCultureIgnoreCase)).Any())
+                        {
+                            MessageBox.Show(string.Format("Asset {0} already exists in album.", System.IO.Path.GetFileName(filename)));
+                            continue;
+                        }
+                        var cmsAsset = _assetService.GetCmsAssetFromFile(filename);
+                        if (cmsAsset != null)
+                        {
+                            _vm.Asset.Duration = cmsAsset.Duration;
+                            _vm.Asset.Filename = cmsAsset.Filename;
+                            _vm.Asset.NewFilePath = cmsAsset.NewFilePath;
+                        }
+                    }                   
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
     }
 }
