@@ -133,8 +133,11 @@ namespace EMVN.AlbumManager.Windows
                         var cmsAsset = _assetService.GetCmsAssetFromFile(filename);
                         if (cmsAsset != null)
                         {
-                            var cmsAssetVM = _vm.Album.AddCmsAsset(cmsAsset);
+                            cmsAsset.TrackCode = _vm.Album.Assets.Count + 1;                            
+                            var cmsAssetVM = _vm.Album.AddCmsAsset(cmsAsset);                            
                             cmsAssetVM.CustomID = _assetService.GetCustomID(_vm.Album.AlbumCode, cmsAssetVM.TrackCode);
+                            cmsAssetVM.Label = _vm.Album.Label;
+                            cmsAssetVM.YoutubeLabel = _vm.Album.Label;
                             selectedAsset = cmsAssetVM;
                         }
                     }
