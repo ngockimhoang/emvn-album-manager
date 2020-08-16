@@ -128,6 +128,7 @@
                                     <DataGridTextColumn Header="Title" Width="180"  Binding="{Binding SongTitle}" IsReadOnly="True"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Filename" Width="180"  Binding="{Binding Filename}" IsReadOnly="True"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Asset ID" Width="140" Binding="{Binding AssetID}" IsReadOnly="True"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Genre" Width="140" Binding="{Binding Genre}" IsReadOnly="True"></DataGridTextColumn>
                                     <DataGridTemplateColumn Width="50">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
