@@ -201,6 +201,7 @@
                             <Button Margin="3,3,3,3" Width="80" x:Name="_btnAllAPL" Click="_btnAllAPL_Click">All APL</Button>
                             <Button Margin="3,3,3,3" Width="80" x:Name="_btnAllOthers" Click="_btnAllOthers_Click">All Others</Button>
                             <Button Margin="3,3,3,3" Width="100" x:Name="_btnGRID" Click="_btnGRID_Click">GRID</Button>
+                            <Button Margin="3,3,3,3" Width="100" x:Name="_btnISRC" Click="_btnISRC_Click">ISRC</Button>
                             <Button Margin="3,3,3,3" Width="100" x:Name="_btnCustom" Click="_btnCustom_Click">Custom Action</Button>
                         </DockPanel>
                         <DockPanel Grid.Row="1" HorizontalAlignment="Left">
