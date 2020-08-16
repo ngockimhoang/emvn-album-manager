@@ -9,6 +9,19 @@ namespace EMVN.Model
 {
     public class AssetPublisher
     {
+        public AssetPublisher()
+        {
+            SyncOwnershipShare = 100;
+            SyncOwnershipTerritory = "";
+            SyncOwnershipRestriction = "exclude";
+            MechanicalOwnershipShare = 100;
+            MechanicalOwnershipTerritory = "";
+            MechanicalOwnershipRestriction = "exclude";
+            PerformanceOwnershipShare = 100;
+            PerformanceOwnershipTerritory = "";
+            PerformanceOwnershipRestriction = "exclude";
+        }
+
         [JsonProperty("name")]
         public string Name { get; set; }
         [JsonProperty("sync_ownership_share")]

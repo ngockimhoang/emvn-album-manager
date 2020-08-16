@@ -301,14 +301,27 @@ namespace EMVN.AlbumManager.Windows
         }
 
         private void _btnCustom_Click(object sender, RoutedEventArgs e)
-        {
-            var total = 0;
-            foreach (var albumVM in _vm.Albums)
-            {
-                if (albumVM.IsSelected)
-                    total += albumVM.Assets.Where(p => !string.IsNullOrEmpty(p.AssetID)).Count();
-            }
-            MessageBox.Show(total.ToString());
+        {            
+            //foreach (var albumVM in _vm.Albums)
+            //{
+            //    foreach (var asset in albumVM.Assets)
+            //    {
+            //        asset.GetCmsAsset().Writers = new List<Model.AssetWriter>()
+            //        {
+            //            new Model.AssetWriter()
+            //            {
+            //                Name = "Kawaiibi"
+            //            }                        
+            //        };
+            //        asset.GetCmsAsset().Publishers = new List<Model.AssetPublisher>()
+            //        {
+            //            new Model.AssetPublisher()
+            //            {
+            //                Name = "Kawaiibi"
+            //            }
+            //        };
+            //    }
+            //}            
         }
 
         private void _btnExportDDEX_Click(object sender, RoutedEventArgs e)
