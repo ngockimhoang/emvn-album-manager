@@ -301,27 +301,25 @@ namespace EMVN.AlbumManager.Windows
         }
 
         private void _btnCustom_Click(object sender, RoutedEventArgs e)
-        {            
-            //foreach (var albumVM in _vm.Albums)
-            //{
-            //    foreach (var asset in albumVM.Assets)
-            //    {
-            //        asset.GetCmsAsset().Writers = new List<Model.AssetWriter>()
-            //        {
-            //            new Model.AssetWriter()
-            //            {
-            //                Name = "Kawaiibi"
-            //            }                        
-            //        };
-            //        asset.GetCmsAsset().Publishers = new List<Model.AssetPublisher>()
-            //        {
-            //            new Model.AssetPublisher()
-            //            {
-            //                Name = "Kawaiibi"
-            //            }
-            //        };
-            //    }
-            //}            
+        {
+            if (_vm.Album != null)
+            {
+                foreach (var asset in _vm.Album.Assets)
+                {
+                    if (string.IsNullOrEmpty(asset.Filename))
+                    {
+                        var mp3Path = System.IO.Path.Combine(@"C:\Users\kimhoang\Desktop\Media Files\tracks", asset.AssetID + ".mp3");
+                        var cmsAsset = _assetService.GetCmsAssetFromFile(mp3Path);
+                        if (cmsAsset != null)
+                        {
+                            asset.Duration = cmsAsset.Duration;
+                            asset.NewFilePath = mp3Path;
+                            asset.Filename = System.IO.Path.GetFileName(mp3Path);
+                        }
+                    }
+                }
+                MessageBox.Show("DONE!");
+            }
         }
 
         private void _btnExportDDEX_Click(object sender, RoutedEventArgs e)
