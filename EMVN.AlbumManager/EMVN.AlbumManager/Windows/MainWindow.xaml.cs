@@ -309,12 +309,15 @@ namespace EMVN.AlbumManager.Windows
                     if (string.IsNullOrEmpty(asset.Filename))
                     {
                         var mp3Path = System.IO.Path.Combine(@"C:\Users\kimhoang\Desktop\Media Files\tracks", asset.AssetID + ".mp3");
-                        var cmsAsset = _assetService.GetCmsAssetFromFile(mp3Path);
-                        if (cmsAsset != null)
+                        if (System.IO.File.Exists(mp3Path))
                         {
-                            asset.Duration = cmsAsset.Duration;
-                            asset.NewFilePath = mp3Path;
-                            asset.Filename = System.IO.Path.GetFileName(mp3Path);
+                            var cmsAsset = _assetService.GetCmsAssetFromFile(mp3Path);
+                            if (cmsAsset != null)
+                            {
+                                asset.Duration = cmsAsset.Duration;
+                                asset.NewFilePath = mp3Path;
+                                asset.Filename = System.IO.Path.GetFileName(mp3Path);
+                            }
                         }
                     }
                 }
