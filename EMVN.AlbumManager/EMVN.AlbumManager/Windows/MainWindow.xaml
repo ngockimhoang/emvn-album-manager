@@ -114,6 +114,7 @@
                             </Grid.RowDefinitions>
                             <DockPanel Grid.Row="0" HorizontalAlignment="Left">
                                 <Button Width="100" Margin="3,3,3,3" x:Name="_btnAddMedia" Click="_btnAddMedia_Click">Add Media</Button>
+                                <Button Width="100" Margin="3,3,3,3" x:Name="_btnAddAsset" Click="_btnAddAsset_Click">Add Asset</Button>
                             </DockPanel>
                             <DataGrid Grid.Row="1" 
                                   ItemsSource="{Binding Album.Assets}" 

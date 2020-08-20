@@ -543,5 +543,23 @@ namespace EMVN.AlbumManager.Windows
                 });
             });
         }
+
+        private void _btnAddAsset_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var cmsAsset = new EMVN.Model.CmsAsset();
+                cmsAsset.TrackCode = _vm.Album.Assets.Count + 1;
+                var cmsAssetVM = _vm.Album.AddCmsAsset(cmsAsset);
+                cmsAssetVM.CustomID = _assetService.GetCustomID(_vm.Album.AlbumCode, cmsAssetVM.TrackCode);
+                cmsAssetVM.Label = _vm.Album.Label;
+                cmsAssetVM.YoutubeLabel = _vm.Album.Label;
+                _vm.Asset = cmsAssetVM;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }
