@@ -124,6 +124,23 @@ namespace EMVN.AlbumManager.Service
             return albums;
         }
 
+        public List<CmsAlbum> GetAllAlbums(string[] albumList)
+        {
+            var albums = new List<CmsAlbum>();
+            var folders = System.IO.Directory.GetDirectories(_albumFolder);
+            foreach (var folder in folders)
+            {
+                var albumCode = System.IO.Path.GetFileName(folder);
+                if (albumList.Contains(albumCode))
+                {
+                    var album = this.LoadAlbum(albumCode);
+                    if (album != null)
+                        albums.Add(album);
+                }
+            }
+            return albums;
+        }
+
         public string UploadAlbum(string albumCode)
         {
             Logger.Instance.Info("Uploading album {0}", albumCode);

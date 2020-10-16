@@ -174,9 +174,19 @@ namespace EMVN.AlbumManager.Windows
             _busyIndicator.IsBusy = true;
             var fromAlbumCode = _tbxFromAlbumCode.Text;
             var toAlbumCode = _tbxToAlbumCode.Text;
+            var albumListStr = _tbxAlbumList.Text;
             Task.Run(() =>
             {
-                var albums = _albumService.GetAllAlbums(fromAlbumCode, toAlbumCode);
+                var albums = new List<Model.CmsAlbum>();
+                if (!string.IsNullOrEmpty(_tbxAlbumList.Text))
+                {
+                    var albumList = albumListStr.Split(',');
+                    albums = _albumService.GetAllAlbums(albumList);
+                }
+                else
+                {
+                    albums = _albumService.GetAllAlbums(fromAlbumCode, toAlbumCode);
+                }
                 var albumVMs = new List<CmsAlbumVM>();
                 foreach (var album in albums)
                 {
