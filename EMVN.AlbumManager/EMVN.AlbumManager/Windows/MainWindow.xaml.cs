@@ -594,7 +594,7 @@ namespace EMVN.AlbumManager.Windows
         {
             foreach (var album in _vm.Albums)
             {
-                album.IsSelected = !album.IsAM && !album.IsAPL;
+                album.IsSelected = true;
             }
         }
     }
