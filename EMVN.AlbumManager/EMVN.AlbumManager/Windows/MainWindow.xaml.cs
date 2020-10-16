@@ -178,7 +178,7 @@ namespace EMVN.AlbumManager.Windows
             Task.Run(() =>
             {
                 var albums = new List<Model.CmsAlbum>();
-                if (!string.IsNullOrEmpty(_tbxAlbumList.Text))
+                if (!string.IsNullOrEmpty(albumListStr))
                 {
                     var albumList = albumListStr.Split(',');
                     albums = _albumService.GetAllAlbums(albumList);
