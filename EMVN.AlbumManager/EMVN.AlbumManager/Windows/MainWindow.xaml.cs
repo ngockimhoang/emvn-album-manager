@@ -208,30 +208,6 @@ namespace EMVN.AlbumManager.Windows
             });
         }
 
-        private void _btnAllAM_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (var album in _vm.Albums)
-            {
-                album.IsSelected = album.IsAM;
-            }
-        }
-
-        private void _btnAllAPL_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (var album in _vm.Albums)
-            {
-                album.IsSelected = album.IsAPL;
-            }
-        }
-
-        private void _btnAllOthers_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (var album in _vm.Albums)
-            {
-                album.IsSelected = !album.IsAM && !album.IsAPL;
-            }
-        }
-
         private void _btnSubmitYouTube_Click(object sender, RoutedEventArgs e)
         {
             _busyIndicator.IsBusy = true;
@@ -611,6 +587,14 @@ namespace EMVN.AlbumManager.Windows
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void _btnAll_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var album in _vm.Albums)
+            {
+                album.IsSelected = !album.IsAM && !album.IsAPL;
             }
         }
     }
