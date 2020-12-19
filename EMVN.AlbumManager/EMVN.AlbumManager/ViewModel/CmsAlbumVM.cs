@@ -29,7 +29,7 @@ namespace EMVN.AlbumManager.ViewModel
             }
             if (!string.IsNullOrEmpty(cmsAlbum.AlbumImage))
             {
-                var imagePath = System.IO.Path.Combine(Settings.ImageFolder, _cmsAlbum.AlbumCode, cmsAlbum.AlbumImage);
+                var imagePath = System.IO.Path.Combine(Settings.ImageFolder, cmsAlbum.AlbumImage);
                 this.AlbumImageObj = GetBitmapImge(imagePath);
             }
         }

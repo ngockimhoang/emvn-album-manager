@@ -27,7 +27,7 @@ namespace EMVN.AlbumManager.Service
         public CmsAlbum LoadAlbum(string albumCode)
         {
             Logger.Instance.Info("Loading album {0}", albumCode);
-            var albumFilePath = System.IO.Path.Combine(_albumFolder, albumCode + ".json");
+            var albumFilePath = System.IO.Path.Combine(_albumFolder, albumCode, albumCode + ".json");
             if (System.IO.File.Exists(albumFilePath))
             {
                 var cmsAlbum = JsonConvert.DeserializeObject<CmsAlbum>(System.IO.File.ReadAllText(albumFilePath));
@@ -35,14 +35,11 @@ namespace EMVN.AlbumManager.Service
                 {
                     if (string.IsNullOrEmpty(cmsAlbum.AlbumImage))
                     {
-                        var albumImageFolder = System.IO.Path.Combine(_imageFolder, albumCode);
-                        if (System.IO.Directory.Exists(albumImageFolder))
+                        var images = System.IO.Directory.GetFiles(_imageFolder, albumCode + ".*");
+                        if (images != null && images.Count() > 0)
                         {
-                            var files = System.IO.Directory.GetFiles(albumImageFolder);
-                            if (files.Any())
-                            {
-                                cmsAlbum.AlbumImage = System.IO.Path.GetFileName(files[0]);
-                            }
+                            var albumImagePath = images[0];
+                            cmsAlbum.AlbumImage = System.IO.Path.GetFileName(albumImagePath);
                         }
                     }
                     cmsAlbum.SoundRecordingSubmitStatus = this.GetSoundRecordingSubmitStatus(cmsAlbum);
