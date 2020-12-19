@@ -27,7 +27,7 @@ namespace EMVN.AlbumManager.Service
         public CmsAlbum LoadAlbum(string albumCode)
         {
             Logger.Instance.Info("Loading album {0}", albumCode);
-            var albumFilePath = System.IO.Path.Combine(_albumFolder, albumCode, albumCode + ".json");
+            var albumFilePath = System.IO.Path.Combine(_albumFolder, albumCode + ".json");
             if (System.IO.File.Exists(albumFilePath))
             {
                 var cmsAlbum = JsonConvert.DeserializeObject<CmsAlbum>(System.IO.File.ReadAllText(albumFilePath));
@@ -58,10 +58,8 @@ namespace EMVN.AlbumManager.Service
             //save album image to imageFolder
             if (!string.IsNullOrEmpty(cmsAlbum.NewAlbumImagePath))
             {
-                cmsAlbum.AlbumImage = cmsAlbum.AlbumCode + System.IO.Path.GetExtension(cmsAlbum.NewAlbumImagePath);                    
-                var albumImageFolderPath = System.IO.Path.Combine(_imageFolder, cmsAlbum.AlbumCode);
-                System.IO.Directory.CreateDirectory(albumImageFolderPath);
-                var albumImageFilePath = System.IO.Path.Combine(albumImageFolderPath, cmsAlbum.AlbumImage);
+                cmsAlbum.AlbumImage = cmsAlbum.AlbumCode + System.IO.Path.GetExtension(cmsAlbum.NewAlbumImagePath);         
+                var albumImageFilePath = System.IO.Path.Combine(_imageFolder, cmsAlbum.AlbumImage);
                 System.IO.File.Copy(cmsAlbum.NewAlbumImagePath, albumImageFilePath, true);
             }
             

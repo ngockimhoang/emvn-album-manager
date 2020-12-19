@@ -597,5 +597,24 @@ namespace EMVN.AlbumManager.Windows
                 album.IsSelected = true;
             }
         }
+
+        private void _btnParseResult_Click(object sender, RoutedEventArgs e)
+        {
+            _busyIndicator.IsBusy = true;
+            Task.Run(() =>
+            {
+                var albumCodes = _vm.Albums.Where(p => p.IsSelected).Select(p => p.AlbumCode).ToArray();
+                if (albumCodes.Any())
+                {
+                    
+                }
+            }).ContinueWith(task =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    _busyIndicator.IsBusy = false;
+                });
+            });
+        }
     }
 }
