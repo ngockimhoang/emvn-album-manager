@@ -602,11 +602,10 @@ namespace EMVN.AlbumManager.Windows
         {
             _busyIndicator.IsBusy = true;
             Task.Run(() =>
-            {
-                var albumCodes = _vm.Albums.Where(p => p.IsSelected).Select(p => p.AlbumCode).ToArray();
-                if (albumCodes.Any())
+            {               
+                foreach (var album in _vm.Albums.Where(p => p.IsSelected).ToArray())
                 {
-                    
+                    _albumService.ParseResult(album.GetCmsAlbum());
                 }
             }).ContinueWith(task =>
             {

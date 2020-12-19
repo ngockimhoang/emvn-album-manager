@@ -1,6 +1,7 @@
 ﻿using EMVN.Common.JSON;
 using EMVN.Common.Log;
 using EMVN.Model;
+using EMVN.Model.DDEX;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -321,6 +322,36 @@ namespace EMVN.AlbumManager.Service
                 }
             }
             return null;
+        }
+
+        public void ParseResult(CmsAlbum album)
+        {
+            var ddexFolder = this.GetDDEXFolder(album.AlbumCode);
+            if (!string.IsNullOrEmpty(ddexFolder))
+            {
+                var ackFilePath = Directory.GetFiles(ddexFolder, "ACK_*");
+                if (ackFilePath != null && ackFilePath.Any())
+                {
+                    var serializer = new System.Xml.Serialization.XmlSerializer(typeof(AckMessage));
+                    var ackMessage = serializer.Deserialize(System.IO.File.OpenRead(ackFilePath[0])) as AckMessage;
+                    if (ackMessage != null
+                        && ackMessage.FileStatus.Equals("FileOK", StringComparison.InvariantCultureIgnoreCase)
+                        && ackMessage.AffectedResources != null
+                        && ackMessage.AffectedResources.Any())
+                    {
+                        foreach (var asset in album.Assets)
+                        {
+                            var affectedResource = ackMessage.AffectedResources.Where(p => p.ISRC.Equals(asset.ISRC, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
+                            if (affectedResource != null)
+                            {
+                                asset.AssetID = affectedResource.SoundRecordingAssetID;
+                                asset.ArtTrackAssetID = affectedResource.ArtTrackAssetID;
+                                Logger.Instance.Info("Asset ISRC {0}, SR {1}, AT {2}", asset.ISRC, asset.AssetID, asset.ArtTrackAssetID);
+                            }
+                        }
+                    }
+                }
+            }            
         }
     }
 }

@@ -24,6 +24,30 @@ namespace EMVN.Model.DDEX
         public string ISRC { get; set; }
         [XmlElement("ProprietaryId")]
         public ProprietaryId[] Properties { get; set; }
+        public string SoundRecordingAssetID
+        {
+            get
+            {
+                if (Properties != null && Properties.Any())
+                {
+                    var property = Properties.Where(p => p.Namespace == "YOUTUBE:SR_ASSET_ID").FirstOrDefault();
+                    return property != null ? property.Text : null;
+                }
+                return null;
+            }
+        }
+        public string ArtTrackAssetID
+        {
+            get
+            {
+                if (Properties != null && Properties.Any())
+                {
+                    var property = Properties.Where(p => p.Namespace == "YOUTUBE:AT_ASSET_ID").FirstOrDefault();
+                    return property != null ? property.Text : null;
+                }
+                return null;
+            }
+        }
     }
 
     public class ProprietaryId
