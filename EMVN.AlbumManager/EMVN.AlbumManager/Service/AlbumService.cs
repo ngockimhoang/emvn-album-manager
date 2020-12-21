@@ -335,7 +335,6 @@ namespace EMVN.AlbumManager.Service
                     var serializer = new System.Xml.Serialization.XmlSerializer(typeof(AckMessage));
                     var ackMessage = serializer.Deserialize(System.IO.File.OpenRead(ackFilePath[0])) as AckMessage;
                     if (ackMessage != null
-                        && ackMessage.FileStatus.Equals("FileOK", StringComparison.InvariantCultureIgnoreCase)
                         && ackMessage.AffectedResources != null
                         && ackMessage.AffectedResources.Any())
                     {
