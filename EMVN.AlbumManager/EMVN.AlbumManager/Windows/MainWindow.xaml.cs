@@ -294,55 +294,11 @@ namespace EMVN.AlbumManager.Windows
                 _busyIndicator.IsBusy = true;
                 Task.Run(() =>
                 {
-                    var folder = @"D:\Media Files\Evan\New Tracks";
-                    var folders = System.IO.Directory.GetDirectories(folder, "*", System.IO.SearchOption.AllDirectories);
-                    foreach (var album in _vm.Albums)
-                    {
-                        if (System.IO.Directory.Exists(System.IO.Path.Combine(Settings.TrackFolder, album.AlbumCode)))
-                            continue;
-                        var actualAlbumName = album.AlbumTitle.Replace("_", "-").Split('-')[1].Trim();
-                        var albumFolder = folders.Where(p => System.IO.Path.GetFileName(p).Equals(actualAlbumName, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
-                        if (albumFolder == null)
-                        {
-                            var firstAsset = album.Assets[0];
-                            var files = System.IO.Directory.GetFiles(folder, firstAsset.Filename, System.IO.SearchOption.AllDirectories);
-                            //need to make sure there is no duplicated filenames in more than 1 folder
-                            if (files.Length == 1)
-                            {
-                                albumFolder = System.IO.Path.GetDirectoryName(files[0]);
-                            }
-                        }
-
-                        if (albumFolder != null)
-                        {
-                            foreach (var asset in album.Assets)
-                            {
-                                try
-                                {
-                                    Logger.Instance.Info("Processing asset {0}-{1}: {2}", album.AlbumCode, album.AlbumTitle, asset.Filename);
-                                    var files = System.IO.Directory.GetFiles(albumFolder, asset.Filename, System.IO.SearchOption.TopDirectoryOnly);
-                                    if (files.Any())
-                                    {
-                                        asset.NewFilePath = files[0];
-                                        asset.Filename = System.IO.Path.GetFileName(files[0]);
-                                    }
-                                    else
-                                    {
-                                        Logger.Instance.Error("Album {0}-{1} Asset {2} media not found.", album.AlbumCode, album.AlbumTitle, asset.Filename);
-                                    }
-                                }
-                                catch (Exception ex)
-                                {
-                                    Logger.Instance.Error("Getting file error {0}", asset.Filename);
-                                }
-                            }
-                        }   
-                        else
-                        {
-                            Logger.Instance.Error("Album {0} cannot find media folder", album.AlbumTitle);
-                        }
-                    }
-                    
+                    var albumCodes = _vm.Albums.Where(p => p.GetCmsAlbum().Assets.Where(c => c.Publishers == null || !c.Publishers.Any()).Any())
+                                              .Select(p => p.AlbumCode)
+                                              .ToArray();
+                    var albumCodeStr = string.Join(",", albumCodes);
+                    Console.WriteLine(albumCodeStr);
                 }).ContinueWith(task =>
                 {
                     Dispatcher.Invoke(() =>
