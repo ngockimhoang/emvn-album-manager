@@ -290,6 +290,13 @@ namespace EMVN.AlbumManager.Service
 
         public string GetSoundRecordingSubmitStatus(CmsAlbum album)
         {
+            //check if assets has asset id
+            if (!album.Assets.Where(p => string.IsNullOrEmpty(p.AssetID)).Any())
+                return "Success";
+            if (album.Assets.Where(p => string.IsNullOrEmpty(p.AssetID)).Any()
+                && album.Assets.Where(p => !string.IsNullOrEmpty(p.AssetID)).Any())
+                return "Partial Success";
+
             var ddexFolder = this.GetDDEXFolder(album.AlbumCode);
             if (!string.IsNullOrEmpty(ddexFolder))
             {
@@ -333,19 +340,22 @@ namespace EMVN.AlbumManager.Service
                 if (ackFilePath != null && ackFilePath.Any())
                 {
                     var serializer = new System.Xml.Serialization.XmlSerializer(typeof(AckMessage));
-                    var ackMessage = serializer.Deserialize(System.IO.File.OpenRead(ackFilePath[0])) as AckMessage;
-                    if (ackMessage != null
-                        && ackMessage.AffectedResources != null
-                        && ackMessage.AffectedResources.Any())
+                    using (var fileStream = System.IO.File.OpenRead(ackFilePath[0]))
                     {
-                        foreach (var asset in album.Assets)
+                        var ackMessage = serializer.Deserialize(fileStream) as AckMessage;
+                        if (ackMessage != null
+                            && ackMessage.AffectedResources != null
+                            && ackMessage.AffectedResources.Any())
                         {
-                            var affectedResource = ackMessage.AffectedResources.Where(p => p.ISRC.Equals(asset.ISRC, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
-                            if (affectedResource != null)
+                            foreach (var asset in album.Assets)
                             {
-                                asset.AssetID = affectedResource.SoundRecordingAssetID;
-                                asset.ArtTrackAssetID = affectedResource.ArtTrackAssetID;
-                                Logger.Instance.Info("Asset ISRC {0}, SR {1}, AT {2}", asset.ISRC, asset.AssetID, asset.ArtTrackAssetID);
+                                var affectedResource = ackMessage.AffectedResources.Where(p => p.ISRC != null && p.ISRC.Equals(asset.ISRC, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
+                                if (affectedResource != null)
+                                {
+                                    asset.AssetID = affectedResource.SoundRecordingAssetID;
+                                    asset.ArtTrackAssetID = affectedResource.ArtTrackAssetID;
+                                    Logger.Instance.Info("Asset ISRC {0}, SR {1}, AT {2}", asset.ISRC, asset.AssetID, asset.ArtTrackAssetID);
+                                }
                             }
                         }
                     }
