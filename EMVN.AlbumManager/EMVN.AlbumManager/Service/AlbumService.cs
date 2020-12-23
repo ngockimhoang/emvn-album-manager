@@ -354,7 +354,9 @@ namespace EMVN.AlbumManager.Service
                                 {
                                     asset.AssetID = affectedResource.SoundRecordingAssetID;
                                     asset.ArtTrackAssetID = affectedResource.ArtTrackAssetID;
-                                    Logger.Instance.Info("Asset ISRC {0}, SR {1}, AT {2}", asset.ISRC, asset.AssetID, asset.ArtTrackAssetID);
+                                    asset.VideoID = affectedResource.VideoID;
+                                    //Logger.Instance.Info("Asset ISRC {0}, SR {1}, AT {2}", asset.ISRC, asset.AssetID, asset.ArtTrackAssetID);
+                                    Console.WriteLine(string.Format("Album {0}, Asset ISRC {1}, SR {2}, AT {3}, Video {4}", album.AlbumCode, asset.ISRC, asset.AssetID, asset.ArtTrackAssetID, asset.VideoID));
                                 }
                             }
                         }

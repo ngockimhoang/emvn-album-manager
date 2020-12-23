@@ -48,6 +48,18 @@ namespace EMVN.Model.DDEX
                 return null;
             }
         }
+        public string VideoID
+        {
+            get
+            {
+                if (Properties != null && Properties.Any())
+                {
+                    var property = Properties.Where(p => p.Namespace == "YOUTUBE:VIDEO_ID").FirstOrDefault();
+                    return property != null ? property.Text : null;
+                }
+                return null;
+            }
+        }
     }
 
     public class ProprietaryId
