@@ -28,6 +28,8 @@ namespace EMVN.Model
         public string AlbumImage { get; set; }
         [JsonProperty("label")]
         public string Label { get; set; }
+        [JsonProperty("excluded_territory_code")]
+        public string[] ExcludedTerritoryCode { get; set; }
         [JsonProperty("assets")]
         public List<CmsAsset> Assets { get; set; }
         [JsonIgnore]
