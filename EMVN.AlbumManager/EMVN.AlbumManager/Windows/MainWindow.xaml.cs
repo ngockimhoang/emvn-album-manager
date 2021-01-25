@@ -569,7 +569,7 @@ namespace EMVN.AlbumManager.Windows
                 Dispatcher.Invoke(() =>
                 {
                     _busyIndicator.IsBusy = false;
-                    MessageBox.Show("Done, remember to click Save!!!")
+                    MessageBox.Show("Done, remember to click Save!!!");
                 });
             });
         }
