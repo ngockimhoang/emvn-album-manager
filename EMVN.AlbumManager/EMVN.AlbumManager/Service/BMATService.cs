@@ -30,7 +30,7 @@ namespace EMVN.AlbumManager.Service
                     ftpService.UploadFolder(packagePath, "/references");
 
                     //upload delivery.complete
-                    ftpService.UploadFile(System.IO.Path.Combine(Settings.BMATFolder, "delivery.complete"), packageName);
+                    ftpService.UploadFile(System.IO.Path.Combine(Settings.BMATFolder, "delivery.complete"), System.IO.Path.Combine("/references", packageName));
                 }
             }
         }
