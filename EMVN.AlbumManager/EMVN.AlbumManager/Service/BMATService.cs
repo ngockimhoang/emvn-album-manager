@@ -16,18 +16,18 @@ namespace EMVN.AlbumManager.Service
         public void UploadPackage(string packageName)
         {
             var packagePath = System.IO.Path.Combine(Settings.BMATFolder, packageName);
-            if (System.IO.Directory.Exists(packageName))
+            if (System.IO.Directory.Exists(packagePath))
             {
                 using (var ftpService = new FtpService(Settings.BMATFtpUrl, Settings.BMATFtpUsername, Settings.BMATFtpPassword))
                 {
                     //check package folder exists
-                    if (!ftpService.Exists(packageName))
+                    if (ftpService.Exists(System.IO.Path.Combine("/references", packageName)))
                     {
                         return;
                     }
 
                     //upload package folder
-                    ftpService.UploadFolder(packagePath);
+                    ftpService.UploadFolder(packagePath, "/references");
 
                     //upload delivery.complete
                     ftpService.UploadFile(System.IO.Path.Combine(Settings.BMATFolder, "delivery.complete"), packageName);

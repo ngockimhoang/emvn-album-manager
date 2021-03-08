@@ -585,16 +585,16 @@ namespace EMVN.AlbumManager.Windows
 
         private void _btnUploadMAT_Click(object sender, RoutedEventArgs e)
         {
+            var packageName = _tbxBMATPackageName.Text;
             _busyIndicator.IsBusy = true;
             Task.Run(() =>
             {
-                _bmatService.UploadPackage(_tbxBMATPackageName.Text);
+                _bmatService.UploadPackage(packageName);
             }).ContinueWith(task =>
             {
                 Dispatcher.Invoke(() =>
                 {
                     _busyIndicator.IsBusy = false;
-                    MessageBox.Show("Done, remember to click Save!!!");
                 });
             });
         }

@@ -18,25 +18,26 @@ namespace EMVN.AlbumManager.Service
                 Protocol = Protocol.Ftp,
                 HostName = url,
                 UserName = username,
-                Password = password                
+                Password = password
             };
             _session = new Session();
             _session.Open(sessionOptions);
         }
 
-        private Session _session;
-
+        private Session _session;      
+      
         public void UploadFile(string file, string remoteFolder)
         {
             Logger.Instance.Info("Uploading file: {0}", file);
             _session.PutFileToDirectory(file, remoteFolder);
         }
 
-        public void UploadFolder(string folder)
+        public void UploadFolder(string folder, string rootFolder)
         {
             Logger.Instance.Info("Uploading folder: {0}", folder);
             //create folder
-            var remoteFolder = Path.GetFileName(folder);
+            var folderName = Path.GetFileName(folder);            
+            var remoteFolder = Path.Combine(rootFolder, folderName);
 
             if (_session.FileExists(remoteFolder))
                 throw new Exception("Folder exists in remote");
@@ -51,7 +52,7 @@ namespace EMVN.AlbumManager.Service
             //sub folders
             foreach (var subFolder in Directory.GetDirectories(folder))
             {
-                this.UploadFolder(subFolder);
+                this.UploadFolder(subFolder, remoteFolder);
             }
         }
 
