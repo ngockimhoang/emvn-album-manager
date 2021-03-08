@@ -234,9 +234,17 @@
                         </DataGrid>
                     </Grid>
                 </TabItem>
+                <TabItem Header="BMAT">
+                    <Grid>
+                        <Label Content="Package" HorizontalAlignment="Left" Margin="27,10,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="_tbxBMATPackageName" HorizontalAlignment="Left" Height="23" Margin="107,13,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="275"/>
+                        <Button x:Name="_btnUploadMAT" Content="Upload" HorizontalAlignment="Left" Margin="417,16,0,0" VerticalAlignment="Top" Width="75" Click="_btnUploadMAT_Click"/>
+                    </Grid>
+                </TabItem>
                 <TabItem Header="Settings">
                     <Grid>
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="30"></RowDefinition>
                             <RowDefinition Height="30"></RowDefinition>
                             <RowDefinition Height="30"></RowDefinition>
                             <RowDefinition Height="30"></RowDefinition>
@@ -260,6 +268,8 @@
                         <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Settings.CompositionFolder}" IsReadOnly="True"></TextBox>
                         <Label Grid.Row="5" Grid.Column="0">YT Asset CLI Folder:</Label>
                         <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Settings.YoutubeAssetCLIFolder}" IsReadOnly="True"></TextBox>
+                        <Label Grid.Row="6" Grid.Column="0">BMAT Folder:</Label>
+                        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Settings.BMATFolder}" IsReadOnly="True"></TextBox>
                     </Grid>
                 </TabItem>
             </TabControl>

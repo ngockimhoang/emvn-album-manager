@@ -18,6 +18,7 @@ namespace EMVN.AlbumManager
             DDEXFolder = ConfigurationManager.AppSettings["DDEXFolder"];
             CompositionFolder = ConfigurationManager.AppSettings["CompositionFolder"];
             YoutubeAssetCLIFolder = ConfigurationManager.AppSettings["YoutubeAssetCLIFolder"];
+            BMATFolder = ConfigurationManager.AppSettings["BMATFolder"];
             SshUrl = ConfigurationManager.AppSettings["SshUrl"];
             SshPort = Convert.ToInt32(ConfigurationManager.AppSettings["SshPort"]);
             SshUrl = ConfigurationManager.AppSettings["SshUrl"];
@@ -27,6 +28,9 @@ namespace EMVN.AlbumManager
             SshUsernameComposition = ConfigurationManager.AppSettings["SshUsernameComposition"];
             SshPasswordComposition = ConfigurationManager.AppSettings["SshPasswordComposition"];
             SshKeyComposition = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), ConfigurationManager.AppSettings["SshKeyComposition"]);
+            BMATFtpUrl = ConfigurationManager.AppSettings["BMATFtpUrl"];
+            BMATFtpUsername = ConfigurationManager.AppSettings["BMATFtpUsername"];
+            BMATFtpPassword = ConfigurationManager.AppSettings["BMATFtpPassword"];
         }
         public static string AlbumFolder { get; private set; }
         public static string ImageFolder { get; private set; }
@@ -34,6 +38,7 @@ namespace EMVN.AlbumManager
         public static string DDEXFolder { get; private set; }
         public static string CompositionFolder { get; private set; }
         public static string YoutubeAssetCLIFolder { get; private set; }
+        public static string BMATFolder { get; private set; }
         public static string SshUrl { get; private set; }
         public static int SshPort { get; private set; }
         public static string SshUsername { get; private set; }
@@ -42,5 +47,8 @@ namespace EMVN.AlbumManager
         public static string SshUsernameComposition { get; private set; }
         public static string SshPasswordComposition { get; private set; }
         public static string SshKeyComposition { get; private set; }
+        public static string BMATFtpUrl { get; private set; }
+        public static string BMATFtpUsername { get; private set; }
+        public static string BMATFtpPassword { get; private set; }
     }
 }

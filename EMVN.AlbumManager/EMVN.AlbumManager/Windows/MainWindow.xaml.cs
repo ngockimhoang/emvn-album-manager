@@ -34,11 +34,13 @@ namespace EMVN.AlbumManager.Windows
             this.DataContext = _vm;
             _albumService = new AlbumService();
             _assetService = new AssetService();
+            _bmatService = new BMATService();
         }
 
         private MainWindowVM _vm;
         private AlbumService _albumService;
         private AssetService _assetService;
+        private BMATService _bmatService;
 
         private void _btnNewAlbum_Click(object sender, RoutedEventArgs e)
         {
@@ -579,6 +581,22 @@ namespace EMVN.AlbumManager.Windows
             HwndSource hwndSource = PresentationSource.FromVisual(this) as HwndSource;
             HwndTarget hwndTarget = hwndSource.CompositionTarget;
             hwndTarget.RenderMode = RenderMode.SoftwareOnly;
+        }
+
+        private void _btnUploadMAT_Click(object sender, RoutedEventArgs e)
+        {
+            _busyIndicator.IsBusy = true;
+            Task.Run(() =>
+            {
+                _bmatService.UploadPackage(_tbxBMATPackageName.Text);
+            }).ContinueWith(task =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    _busyIndicator.IsBusy = false;
+                    MessageBox.Show("Done, remember to click Save!!!");
+                });
+            });
         }
     }
 }

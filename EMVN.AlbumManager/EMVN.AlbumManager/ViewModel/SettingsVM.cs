@@ -18,6 +18,7 @@ namespace EMVN.AlbumManager.ViewModel
             _ddexFolder = Settings.DDEXFolder;
             _compositionFolder = Settings.CompositionFolder;
             _youtubeAssetCLIFolder = Settings.YoutubeAssetCLIFolder;
+            _bmatFolder = Settings.BMATFolder;
         }
 
         private string _albumFolder;
@@ -101,6 +102,20 @@ namespace EMVN.AlbumManager.ViewModel
             {
                 _youtubeAssetCLIFolder = value;
                 RaisePropertyChanged("YoutubeAssetCLIFolder");
+            }
+        }
+
+        private string _bmatFolder;
+        public string BMATFolder
+        {
+            get
+            {
+                return _bmatFolder;
+            }
+            set
+            {
+                _bmatFolder = value;
+                RaisePropertyChanged("BMATFolder");
             }
         }
     }
