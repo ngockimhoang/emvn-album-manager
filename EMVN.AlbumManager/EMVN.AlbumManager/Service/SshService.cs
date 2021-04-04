@@ -13,15 +13,28 @@ namespace EMVN.AlbumManager.Service
     {
         public SshService(string url, int port, string username, string password, string privateKey)
         {
-            if (!string.IsNullOrEmpty(password))
+            var retry = 0;
+            while (retry < 10)
             {
-                _client = new SftpClient(url, port, username, password);
+                try
+                {
+                    if (!string.IsNullOrEmpty(password))
+                    {
+                        _client = new SftpClient(url, port, username, password);
+                    }
+                    else
+                    {
+                        _client = new SftpClient(url, port, username, new PrivateKeyFile(privateKey));
+                    }
+                    _client.Connect();
+                    break;
+                }
+                catch (Exception ex)
+                {
+                    Logger.Instance.Error(ex, "Failed to connect o SSH server " + url);
+                    retry++;
+                }
             }
-            else
-            {
-                _client = new SftpClient(url, port, username, new PrivateKeyFile(privateKey));
-            }
-            _client.Connect();
         }
 
         private SftpClient _client;
