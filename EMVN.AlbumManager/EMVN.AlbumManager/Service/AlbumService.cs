@@ -291,26 +291,35 @@ namespace EMVN.AlbumManager.Service
         public string GetSoundRecordingSubmitStatus(CmsAlbum album)
         {
             //check if assets has asset id
+            string status = null;
             if (!album.Assets.Where(p => string.IsNullOrEmpty(p.AssetID)).Any())
-                return "Success";
+                status = "Success";
             if (album.Assets.Where(p => string.IsNullOrEmpty(p.AssetID)).Any()
                 && album.Assets.Where(p => !string.IsNullOrEmpty(p.AssetID)).Any())
-                return "Partial Success";
+                status = "Partial Success";
 
+            string packageStatus = null;
             var ddexFolder = this.GetDDEXFolder(album.AlbumCode);
             if (!string.IsNullOrEmpty(ddexFolder))
             {
                 var ackFilePath = Directory.GetFiles(ddexFolder, "ACK_*");
                 if (ackFilePath != null && ackFilePath.Any())
-                    return "Submitted";
-                if (!string.IsNullOrEmpty(album.AlbumIdentifier))
+                    packageStatus = "Submitted";
+                else if (!string.IsNullOrEmpty(album.AlbumIdentifier))
                 {
                     var ddexFilePath = Directory.GetFiles(ddexFolder, album.AlbumIdentifier + ".xml");
                     if (ddexFilePath != null && ddexFilePath.Any())
-                        return "Package Generated";
+                        packageStatus = "Package Generated";
                 }
             }
-            return null;
+
+            if (string.IsNullOrEmpty(status) && string.IsNullOrEmpty(packageStatus))
+                return null;
+            else if (!string.IsNullOrEmpty(status) && !string.IsNullOrEmpty(packageStatus))
+                return string.Format("{0}-{1}", status, packageStatus);
+            else if (!string.IsNullOrEmpty(status))
+                return status;
+            else return packageStatus;
         }
 
         public string GetCompositionSubmitStatus(CmsAlbum album)
