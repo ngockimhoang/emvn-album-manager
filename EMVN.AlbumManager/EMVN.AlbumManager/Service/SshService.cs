@@ -32,6 +32,7 @@ namespace EMVN.AlbumManager.Service
                 catch (Exception ex)
                 {
                     Logger.Instance.Error(ex, "Failed to connect o SSH server " + url);
+                    System.Threading.Thread.Sleep(500);
                     retry++;
                 }
             }
