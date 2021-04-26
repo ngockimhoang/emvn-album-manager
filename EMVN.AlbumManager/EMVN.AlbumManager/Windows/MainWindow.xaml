@@ -237,7 +237,8 @@
                 <TabItem Header="BMAT">
                     <Grid>
                         <Label Content="Package" HorizontalAlignment="Left" Margin="27,10,0,0" VerticalAlignment="Top"/>
-                        <TextBox x:Name="_tbxBMATPackageName" HorizontalAlignment="Left" Height="23" Margin="107,13,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="275"/>
+                        <TextBox x:Name="_tbxBMATPackageNameFrom" HorizontalAlignment="Left" Height="23" Margin="107,13,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+                        <TextBox x:Name="_tbxBMATPackageNameTo" HorizontalAlignment="Left" Height="23" Margin="247,13,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="135"/>
                         <Button x:Name="_btnUploadMAT" Content="Upload" HorizontalAlignment="Left" Margin="417,16,0,0" VerticalAlignment="Top" Width="75" Click="_btnUploadMAT_Click"/>
                     </Grid>
                 </TabItem>

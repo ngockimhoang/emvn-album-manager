@@ -34,5 +34,27 @@ namespace EMVN.AlbumManager.Service
                 }
             }
         }
+
+        public List<string> GetAllPackages(string packageNameFrom, string packageNameTo)
+        {
+            var packages = new List<string>();
+            var folders = System.IO.Directory.GetDirectories(Settings.BMATFolder);
+            foreach (var folder in folders)
+            {
+                var packageName = System.IO.Path.GetFileName(folder);
+                if (!string.IsNullOrEmpty(packageNameFrom))
+                {
+                    if (string.Compare(packageNameFrom, packageName) > 0)
+                        continue;
+                }
+                if (!string.IsNullOrEmpty(packageNameTo))
+                {
+                    if (string.Compare(packageName, packageNameTo) > 0)
+                        continue;
+                }
+                packages.Add(packageName);
+            }
+            return packages;
+        }
     }
 }

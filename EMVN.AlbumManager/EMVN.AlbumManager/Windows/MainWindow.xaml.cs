@@ -296,11 +296,27 @@ namespace EMVN.AlbumManager.Windows
                 _busyIndicator.IsBusy = true;
                 Task.Run(() =>
                 {
-                    var albumCodes = _vm.Albums.Where(p => p.GetCmsAlbum().Assets.Where(c => c.Publishers == null || !c.Publishers.Any()).Any())
-                                              .Select(p => p.AlbumCode)
-                                              .ToArray();
-                    var albumCodeStr = string.Join(",", albumCodes);
-                    Console.WriteLine(albumCodeStr);
+                    foreach (var albumVM in _vm.Albums)
+                    {
+                        if (albumVM.IsSelected)
+                        {
+                            foreach (var asset in albumVM.GetCmsAlbum().Assets)
+                            {
+                                if (asset.Publishers == null
+                                    || !asset.Publishers.Any())
+                                {
+                                    asset.Publishers = new List<Model.AssetPublisher>()
+                                    {
+                                        new Model.AssetPublisher()
+                                        {
+                                            Name = "Songs To Your Eyes Publishing ASCAP 471983029"
+                                        }
+                                    };
+                                }                                
+                            }
+                        }
+                    }
+                        
                 }).ContinueWith(task =>
                 {
                     Dispatcher.Invoke(() =>
@@ -585,11 +601,16 @@ namespace EMVN.AlbumManager.Windows
 
         private void _btnUploadMAT_Click(object sender, RoutedEventArgs e)
         {
-            var packageName = _tbxBMATPackageName.Text;
+            var packageNameFrom = _tbxBMATPackageNameFrom.Text;
+            var packageNameTo = _tbxBMATPackageNameTo.Text;
             _busyIndicator.IsBusy = true;
             Task.Run(() =>
             {
-                _bmatService.UploadPackage(packageName);
+                var packages = _bmatService.GetAllPackages(packageNameFrom, packageNameTo);
+                foreach (var package in packages)
+                {
+                    _bmatService.UploadPackage(package);
+                }
             }).ContinueWith(task =>
             {
                 Dispatcher.Invoke(() =>
