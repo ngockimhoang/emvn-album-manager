@@ -194,9 +194,9 @@
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
                         <DockPanel Grid.Row="0" HorizontalAlignment="Left">
-                            <TextBox Width="100" Margin="3,3,3,3" CharacterCasing="Upper" x:Name="_tbxFromAlbumCode"></TextBox>
-                            <TextBox Width="100" Margin="3,3,3,3" CharacterCasing="Upper" x:Name="_tbxToAlbumCode"></TextBox>
-                            <TextBox Width="150" Margin="3,3,3,3" CharacterCasing="Upper" x:Name="_tbxAlbumList"></TextBox>
+                            <TextBox Width="100" Margin="3,3,3,3" x:Name="_tbxFromAlbumCode"></TextBox>
+                            <TextBox Width="100" Margin="3,3,3,3" x:Name="_tbxToAlbumCode"></TextBox>
+                            <TextBox Width="150" Margin="3,3,3,3" x:Name="_tbxAlbumList"></TextBox>
                             <Button Margin="3,3,3,3" Width="80" x:Name="_btnLoadAllAbums" Click="_btnLoadAllAbums_Click">Load</Button>
                             <Button Margin="3,3,3,3" Width="80" x:Name="_btnSaveAbums" Click="_btnSaveAbums_Click">Save</Button>
                             <Button Margin="3,3,3,3" Width="100" x:Name="_btnClearSelection" Click="_btnClearSelection_Click">Clear Selection</Button>
