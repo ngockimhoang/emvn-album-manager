@@ -66,6 +66,8 @@ namespace EMVN.Model
         [JsonIgnore]
         public string SoundRecordingSubmitStatus { get; set; }
         [JsonIgnore]
+        public string SoundRecordingCSVSubmitStatus { get; set; }
+        [JsonIgnore]
         public string CompositionSubmitStatus { get; set; }
         #endregion
     }

@@ -204,12 +204,21 @@
                             <Button Margin="3,3,3,3" Width="100" x:Name="_btnGRID" Click="_btnGRID_Click">GRID</Button>
                             <Button Margin="3,3,3,3" Width="100" x:Name="_btnISRC" Click="_btnISRC_Click">ISRC</Button>
                             <Button Margin="3,3,3,3" Width="100" x:Name="_btnParseResult" Click="_btnParseResult_Click">Parse Result</Button>
+                            <Button Margin="3,3,3,3" Width="100" x:Name="_btnParseResultCSV" Click="_btnParseResultCSV_Click">Parse Result CSV</Button>
                             <Button Margin="3,3,3,3" Width="100" x:Name="_btnCustom" Click="_btnCustom_Click">Custom Action</Button>
                         </DockPanel>
                         <DockPanel Grid.Row="1" HorizontalAlignment="Left">
                             <Button Margin="3,3,3,3" Width="80" x:Name="_btnExportDDEX" Click="_btnExportDDEX_Click">DDEX</Button>
                             <Button Margin="3,3,3,3" Width="80" x:Name="_btnSubmitYouTube" Click="_btnSubmitYouTube_Click">Submit YT</Button>
                             <Button Margin="3,3,3,3" Width="80" x:Name="_btnGetResult" Click="_btnGetResult_Click">Get Result</Button>
+
+                            <Button Margin="100,3,3,3" Width="80" x:Name="_btnExportCSV" Click="_btnExportCSV_Click">CSV</Button>
+                            <Button Margin="3,3,3,3" Width="80" x:Name="_btnSubmitYouTubeCSV" Click="_btnSubmitYouTubeCSV_Click">Submit YT SR</Button>
+                            <Button Margin="3,3,3,3" Width="80" x:Name="_btnSubmitYouTubeCSVAT" Click="_btnSubmitYouTubeCSVAT_Click">Submit YT AT</Button>
+                            <Button Margin="3,3,3,3" Width="80" x:Name="_btnGetResultCSV" Click="_btnGetResultCSV_Click">Get Result SR</Button>
+                            <Button Margin="3,3,3,3" Width="80" x:Name="_btnGetResultCSVAT" Click="_btnGetResultCSVAT_Click">Get Result AT</Button>
+
+
                             <Button Margin="100,3,3,3" Width="80" x:Name="_btnExportComposition" Click="_btnExportComposition_Click">Composition</Button>
                             <Button Margin="3,3,3,3" Width="80" x:Name="_btnSubmitYouTubeComposition" Click="_btnSubmitYouTubeComposition_Click">Submit YT</Button>
                             <Button Margin="3,3,3,3" Width="80" x:Name="_btnGetResultComposition" Click="_btnGetResultComposition_Click">Get Result</Button>
@@ -229,6 +238,7 @@
                                 <DataGridTextColumn Header="Label" Binding="{Binding Label}" Width="100"></DataGridTextColumn>
                                 <DataGridTextColumn Header="Album Title" Binding="{Binding AlbumTitle}" Width="300"></DataGridTextColumn>
                                 <DataGridTextColumn Header="SR Status" Binding="{Binding SoundRecordingSubmitStatus}" IsReadOnly="True" Width="150"></DataGridTextColumn>
+                                <DataGridTextColumn Header="SR CSV Status" Binding="{Binding SoundRecordingCSVSubmitStatus}" IsReadOnly="True" Width="150"></DataGridTextColumn>
                                 <DataGridTextColumn Header="Composition Status" Binding="{Binding CompositionSubmitStatus}" IsReadOnly="True" Width="150"></DataGridTextColumn>
                             </DataGrid.Columns>
                         </DataGrid>

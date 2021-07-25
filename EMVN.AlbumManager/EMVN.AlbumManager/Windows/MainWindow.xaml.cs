@@ -295,28 +295,20 @@ namespace EMVN.AlbumManager.Windows
             {
                 _busyIndicator.IsBusy = true;
                 Task.Run(() =>
-                {
+                {                  
                     foreach (var albumVM in _vm.Albums)
                     {
                         if (albumVM.IsSelected)
                         {
-                            foreach (var asset in albumVM.GetCmsAlbum().Assets)
+                            if (string.IsNullOrEmpty(albumVM.AlbumArtist))
+                                albumVM.AlbumArtist = "N/A";
+                            foreach (var asset in albumVM.Assets)
                             {
-                                if (asset.Publishers == null
-                                    || !asset.Publishers.Any())
-                                {
-                                    asset.Publishers = new List<Model.AssetPublisher>()
-                                    {
-                                        new Model.AssetPublisher()
-                                        {
-                                            Name = "Songs To Your Eyes Publishing ASCAP 471983029"
-                                        }
-                                    };
-                                }                                
+                                if (string.IsNullOrEmpty(asset.Artist))
+                                    asset.Artist = "N/A";
                             }
                         }
                     }
-                        
                 }).ContinueWith(task =>
                 {
                     Dispatcher.Invoke(() =>
@@ -616,6 +608,152 @@ namespace EMVN.AlbumManager.Windows
                 Dispatcher.Invoke(() =>
                 {
                     _busyIndicator.IsBusy = false;
+                });
+            });
+        }
+
+        private void _btnExportCSV_Click(object sender, RoutedEventArgs e)
+        {
+            _busyIndicator.IsBusy = true;
+            Task.Run(() =>
+            {
+                var albumCodes = _vm.Albums.Where(p => p.IsSelected).Select(p => p.AlbumCode).ToArray();
+                if (albumCodes.Any())
+                {
+                    var albumCodeString = string.Join(",", albumCodes);
+                    var startInfo = new ProcessStartInfo("cmd");
+                    startInfo.WorkingDirectory = Settings.YoutubeAssetCLIFolder;
+                    startInfo.Arguments = string.Format("/K go run \"{0}/main.go\" --album-code \"{1}\" export-csv", Settings.YoutubeAssetCLIFolder, albumCodeString);
+                    startInfo.WindowStyle = ProcessWindowStyle.Normal;
+                    var process = Process.Start(startInfo);
+                    process.WaitForExit();
+                }
+            }).ContinueWith(task =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    _busyIndicator.IsBusy = false;
+                });
+            });
+        }
+
+        private void _btnSubmitYouTubeCSV_Click(object sender, RoutedEventArgs e)
+        {
+            _busyIndicator.IsBusy = true;
+            Task.Run(() =>
+            {
+                var csvFolderList = new List<string>();
+                foreach (var album in _vm.Albums)
+                {
+                    if (album.IsSelected)
+                    {
+                        try
+                        {
+                            var csvFolder = _albumService.UploadAlbumCSVSoundRecording(album.AlbumCode);
+                            if (!string.IsNullOrEmpty(csvFolder))
+                                csvFolderList.Add(csvFolder);
+                        }
+                        catch { }
+                    }
+                }
+            }).ContinueWith(task =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    _busyIndicator.IsBusy = false;
+                });
+            });
+        }
+
+        private void _btnGetResultCSV_Click(object sender, RoutedEventArgs e)
+        {
+            var csvFolderList = new List<string>();
+            foreach (var album in _vm.Albums)
+            {
+                if (album.IsSelected)
+                {
+                    var csvFolder = _albumService.GetCSVFolderSoundRecording(album.AlbumCode);
+                    if (!string.IsNullOrEmpty(csvFolder))
+                        csvFolderList.Add(csvFolder);
+                }
+            }
+
+            if (csvFolderList.Any())
+            {
+                Task.Run(() =>
+                {
+                    _albumService.GetUploadAlbumReportCSV(csvFolderList.ToArray());
+                });
+                MessageBox.Show("Task running in background");
+            }
+        }
+
+        private void _btnSubmitYouTubeCSVAT_Click(object sender, RoutedEventArgs e)
+        {
+            _busyIndicator.IsBusy = true;
+            Task.Run(() =>
+            {
+                var csvFolderList = new List<string>();
+                foreach (var album in _vm.Albums)
+                {
+                    if (album.IsSelected)
+                    {
+                        try
+                        {
+                            var csvFolder = _albumService.UploadAlbumCSVArtTrack(album.AlbumCode);
+                            if (!string.IsNullOrEmpty(csvFolder))
+                                csvFolderList.Add(csvFolder);
+                        }
+                        catch { }
+                    }
+                }
+            }).ContinueWith(task =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    _busyIndicator.IsBusy = false;
+                });
+            });
+        }
+
+        private void _btnGetResultCSVAT_Click(object sender, RoutedEventArgs e)
+        {
+            var csvFolderList = new List<string>();
+            foreach (var album in _vm.Albums)
+            {
+                if (album.IsSelected)
+                {
+                    var csvFolder = _albumService.GetCSVFolderArtTrack(album.AlbumCode);
+                    if (!string.IsNullOrEmpty(csvFolder))
+                        csvFolderList.Add(csvFolder);
+                }
+            }
+
+            if (csvFolderList.Any())
+            {
+                Task.Run(() =>
+                {
+                    _albumService.GetUploadAlbumReportCSV(csvFolderList.ToArray());
+                });
+                MessageBox.Show("Task running in background");
+            }
+        }
+
+        private void _btnParseResultCSV_Click(object sender, RoutedEventArgs e)
+        {
+            _busyIndicator.IsBusy = true;
+            Task.Run(() =>
+            {
+                foreach (var album in _vm.Albums.Where(p => p.IsSelected).ToArray())
+                {
+                    _albumService.ParseResultCSV(album.GetCmsAlbum());
+                }
+            }).ContinueWith(task =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    _busyIndicator.IsBusy = false;
+                    MessageBox.Show("Done, remember to click Save!!!");
                 });
             });
         }

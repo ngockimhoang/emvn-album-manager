@@ -216,6 +216,14 @@ namespace EMVN.AlbumManager.ViewModel
             }            
         }
 
+        public string SoundRecordingCSVSubmitStatus
+        {
+            get
+            {
+                return _cmsAlbum.SoundRecordingCSVSubmitStatus;
+            }
+        }
+
         public string CompositionSubmitStatus
         {
             get
@@ -234,6 +242,17 @@ namespace EMVN.AlbumManager.ViewModel
         public void DeleteCmsAsset(CmsAssetVM cmsAssetVM)
         {
             Assets.Remove(cmsAssetVM);
+        }
+
+        public void SetCmsAssets(List<CmsAsset> assets)
+        {
+            _cmsAlbum.Assets = assets;
+            Assets.Clear();
+            if (_cmsAlbum.Assets != null)
+            {
+                foreach (var asset in _cmsAlbum.Assets)
+                    Assets.Add(new CmsAssetVM(asset));
+            }
         }
 
         private BitmapImage GetBitmapImge(string imagePath)
